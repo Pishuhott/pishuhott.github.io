@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./scr/styles/index.css">
+    <title>Raindrops</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="game-field">
+            <div class="drop">
+                <span>2</span>
+                <br>
+                <span>+</span>
+                <br>
+                <span>2</span>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel__score">
+                <p>Score: <span class="score">0</span></p>
+                <p>Best score: <span class="best-score">0</span></p>
+            </div>
+
+            <div class="panel__calc">
+                <input class="input" type="text" maxlength="5" value="" disabled>
+                <div class="panel__buttons">
+                    <button class="btn-number">7</button>
+                    <button class="btn-number">8</button>
+                    <button class="btn-number">9</button>
+                    <button class="btn-clear" id="clear">Clear</button>
+                    <button class="btn-number">4</button>
+                    <button class="btn-number">5</button>
+                    <button class="btn-number">6</button>
+                    <button class="btn-number">1</button>
+                    <button class="btn-number">2</button>
+                    <button class="btn-number">3</button>
+                    <button class="btn-enter" id="enter">Enter</button>
+                    <button class="btn-number">0</button>
+                    <button class="btn-clear" id="delete">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./scr/js/index.js"></script>
+</body>
+
+</html>
