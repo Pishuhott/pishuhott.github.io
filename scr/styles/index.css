@@ -17,6 +17,7 @@
 .game-field {
     background: url(../../img/beach.jpg) no-repeat center;
     background-size: cover;
+    position: relative;
 }
 
 .drop {
@@ -31,6 +32,49 @@
 
 .drop span {
     font-size: 2rem;
+}
+
+.wave {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 15%;
+    overflow: hidden;
+}
+
+.water {
+    position: absolute;
+    bottom: 0;
+    width: 5000px;
+    height: 100%;
+    z-index: 2;
+    animation: water 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+    transform: translate3d(0, 0, 0);
+    background-image: url('../../img/wave.svg');
+    background-repeat: repeat-x;
+}
+
+.water-2 {
+    bottom: 5px;
+    animation: water 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) -0.125s infinite, swell 7s ease -1.25s infinite;
+}
+
+@keyframes water {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: -1288px;
+    }
+}
+
+@keyframes swell {
+    0%, 100% {
+        transform: translate3d(0, -25px, 0);
+    }
+    50% {
+        transform: translate3d(0, 5px, 0);
+    }
 }
 
 .panel {
@@ -115,4 +159,8 @@ button {
 
 .panel__buttons button:active {
     box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.panel__buttons__play {
+    margin-top: 50px;
 }
