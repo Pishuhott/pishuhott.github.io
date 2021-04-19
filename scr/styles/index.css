@@ -21,17 +21,33 @@
 }
 
 .drop {
+    position: absolute;
     display: inline-block;
     background: url(../../img/drop.svg) no-repeat center;
     background-size: cover;
-    width: 8%;
+    width: 12%;
     height: 15%;
-    background-size: 100%;
     text-align: center;
 }
 
 .drop span {
-    font-size: 2rem;
+    font-size: 3rem;
+    position: absolute;
+}
+
+.drop .number-1 {
+    top: 30%;
+    left: 40%;
+}
+
+.drop__operator {
+    top: 45%;
+    left: 15%;
+}
+
+.drop .number-2 {
+    top: 60%;
+    left: 40%;
 }
 
 .wave {

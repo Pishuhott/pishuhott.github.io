@@ -3,8 +3,11 @@ let doc = document,
     clearBtns = doc.querySelectorAll('.btn-clear'),
     enterBtn = doc.querySelector('.btn-enter'),
     display = doc.querySelector('.input'),
-    randomNumber = doc.querySelectorAll('.drop__numbers '),
+    fielGame = doc.querySelector('.game-field'),
+    drop = doc.querySelector('.drop'),
+    randomNumber = doc.querySelectorAll('.drop__numbers'),
     operatorsDrop = doc.querySelector('.drop__operator'),
+    posDrop = 0,
     arrOperators = ['-', '+', '/', '*'],
     btnPlay = doc.querySelector('.play');
 
@@ -20,7 +23,7 @@ let numberPress = (number) => {
         display.value += number;
     };
 };
-
+//---Keyboard input----------
 let KeyDownValue = (code) => {
     let key = doc.querySelector(`.btn[data-key='${code}']`);
 
@@ -40,7 +43,7 @@ let KeyDownValue = (code) => {
         };
     };
 }
-
+//---Cleaning--------------
 let clear = (id) => {
     if (id === 'clear') {
         display.value = '';
@@ -49,7 +52,7 @@ let clear = (id) => {
     };
 }
 
-
+//---Event-----------------
 for (let number of numbersBtn) {
     number.addEventListener('click',
         (e) => numberPress(e.target.textContent));
@@ -63,34 +66,51 @@ for (let clearBtn of clearBtns) {
         (e) => clear(e.srcElement.id));
 }
 //-----------------------------------
-enterBtn.addEventListener('click',
-    (e) => operationEnter((e.target.textContent)));
+
+
+
 
 //Drop-------------------------------
-
-
-
-
-
-
-
-
+//---Random drop values--------------
 function getRandomInRange() {
     for (let number of randomNumber) {
         function getRandom(min, max) {
             number.textContent = Math.floor(Math.random() * (max - min + 1)) + min;
-        }
+        };
         getRandom(1, 100);
     };
 }
 
-
-
 function arrayRandElement(arr) {
-    var rand = Math.floor(Math.random() * arr.length);
+    let rand = Math.floor(Math.random() * arr.length);
     operatorsDrop.textContent = arr[rand];
 }
+//--Accidental drop appearance------
 
+function dropAappearance () {
+    function randomDropAappearance(min, max) {
+        drop.style.left = (Math.floor(Math.random() * (max - min + 1)) + min) - fielGame.children[0].clientWidth + 'px';
+    };
+
+    randomDropAappearance(fielGame.children[0].clientWidth, fielGame.clientWidth);
+}
+
+
+//---Droplet movement---------------
+function moveDrop() {
+    let setClear = setInterval(fallDrop, 10);
+
+    function fallDrop() {
+        if (posDrop == fielGame.clientHeight 
+            - fielGame.children[1].clientHeight 
+            - fielGame.children[0].clientHeight) {
+            clearInterval(setClear)
+        } else {
+            posDrop++;
+            drop.style.top = posDrop + 'px'
+        };
+    }
+}
 
 
 
@@ -100,4 +120,6 @@ function arrayRandElement(arr) {
 btnPlay.addEventListener('click', () => {
     getRandomInRange();
     arrayRandElement(arrOperators);
+    dropAappearance ();
+    moveDrop();
 })
