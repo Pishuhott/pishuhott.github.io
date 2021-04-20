@@ -28,6 +28,12 @@
     width: 12%;
     height: 15%;
     text-align: center;
+    top: 0;
+    transition: top 15s;
+}
+
+.drop.animate {
+    top: 100%;
 }
 
 .drop span {
