@@ -29,11 +29,31 @@
     height: 15%;
     text-align: center;
     top: 0;
-    transition: top 15s;
+    transition: top 10s linear;
 }
 
-.drop.animate {
-    top: 100%;
+.drop-splash {
+    width: 20%;
+    height: 20%;
+    background: url(../../img/drop-splash.svg) no-repeat center;
+    background-size: contain;
+    animation: splash 1s linear;
+}
+
+@keyframes splash {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.drop-splash span {
+    display: none;
 }
 
 .drop span {
@@ -116,11 +136,44 @@
 
 .panel__score p {
     font-size: 3rem;
+    position: relative;
 }
 
 .panel__score span {
     font-size: 3.5rem;
     color: crimson;
+}
+
+#score-20 {
+    font-size: 4rem;
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    opacity: 0;
+}
+
+#score-30 {
+    font-size: 4rem;
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    opacity: 0;
+}
+
+.score-active {
+    animation: score-active 1s linear;
+}
+
+@keyframes score-active{
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .panel__calc {

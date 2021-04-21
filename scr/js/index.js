@@ -4,12 +4,10 @@ let doc = document,
     enterBtn = doc.querySelector('.btn-enter'),
     display = doc.querySelector('.input'),
     gameField = doc.querySelector('.game-field'),
-    // drop,
-    // randomNumber,
-    // operatorsDrop,
-    posDrop = 0,
-    arrOperators = ['-', '+', '/', '*'],
-    btnPlay = doc.querySelector('.play');
+    arrOperators = ['-', '+', '*'],
+    resyltDrop,
+    btnPlay = doc.querySelector('.play'),
+    score = doc.querySelector('.score');
 
 
 
@@ -31,9 +29,9 @@ let KeyDownValue = (code) => {
         display.value = '';
     } else if (key.id === 'delete') {
         display.value = display.value.slice(0, -1);
-    };
+    }
 
-    if (key.id === 'clear' || key.id === 'delete') {
+    if (key.id === 'clear' || key.id === 'delete' || key.id === 'enter') {
         display.value == display.value;
     } else {
         if (display.value == '') {
@@ -42,6 +40,10 @@ let KeyDownValue = (code) => {
             display.value += key.textContent;
         };
     };
+
+    if (key.id === 'enter') {
+        comparisonOfDropAndInputValues();
+    }
 }
 //---Cleaning--------------
 let clear = (id) => {
@@ -71,50 +73,53 @@ for (let clearBtn of clearBtns) {
 
 
 //Drop-------------------------------
-
-
-/* Alternative code */
-
 let drops = []; //массив капель
 let dropCounter = 0; // счетчик капель
 
 // функция для генерирования чисел с аргументом min, max, ограничивающим range
-let alternativeGenerateNumber = function(min, max) {
+let GenerateNumber = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-let alternativeGenerateOperator = function() {
+let GenerateOperator = function () {
     let rand = Math.floor(Math.random() * arrOperators.length);
     return arrOperators[rand]; // возвращаешь оператор
 }
 
-let  dropAappearance = function(id) {
-    let drop = doc.querySelector('.drop-'+id);
+let dropAappearance = function (id) {
+    let drop = doc.querySelector('.drop-' + id);
+
     function randomDropAappearance(min, max) {
-        drop.style.left = (Math.floor(Math.random() * (max - min + 1)) + min) - gameField.children[0].clientWidth + 'px';
+        drop.style.left = (Math.floor(Math.random() * (max - min + 1)) + min) - drop.clientWidth + 'px';
     };
 
-    randomDropAappearance(gameField.children[0].clientWidth, gameField.clientWidth);
+    randomDropAappearance(drop.clientWidth, gameField.clientWidth);
 }
 
-let alternativeMoveDrop = function(id) {
-    doc.querySelector('.drop-'+id).classList.add('animate');
-    //тут запускаешь функцию для анимирования по номеру капли
+let MoveDrop = function (id) {
+    let dorp = doc.querySelector('.drop-' + id);
+
+    dorp.style.top = gameField.clientHeight -
+        gameField.lastElementChild.clientHeight -
+        dorp.clientHeight + 5 + 'px';
 }
 
+let resultDrop = function (num1, operator, num2) {
+    return eval(num1 + operator + num2);
+}
 
-let alternativeAddDrop = function () {
+let startDrop = function () {
     dropCounter++;
     let drop = new Object();
     drop.id = dropCounter;
-    drop.operator = alternativeGenerateOperator();
-    if (drop.operator == '/') {
-        //отдельная логика для деления
-    }
-    else {
-        drop.num1 = alternativeGenerateNumber(1, 20); // =  генерируешь первое число
-        drop.num2 = alternativeGenerateNumber(1, 10); // = генерируешь второе число
-    }
+    drop.operator = GenerateOperator();
+    // if (drop.operator == '/') {
+    //     //отдельная логика для деления
+    // } else {
+    // }
+    drop.num1 = GenerateNumber(1, 10); // =  генерируешь первое число
+    drop.num2 = GenerateNumber(1, 10); // = генерируешь второе число
+    drop.result = resultDrop(drop.num1, drop.operator, drop.num2);
 
     drop.time = Date.now();
 
@@ -122,103 +127,95 @@ let alternativeAddDrop = function () {
 
     gameField.insertAdjacentHTML('afterbegin',
         '<div class="drop drop-' + drop.id + '">' +
-            '<span class="drop__numbers number-1">' + drop.num1 + '</span><br>' +
-            '<span class="drop__operator">' + drop.operator + '</span><br>' +
-            '<span class="drop__numbers number-2">' + drop.num2 + '</span>' +
+        '<span class="drop__numbers number-1">' + drop.num1 + '</span><br>' +
+        '<span class="drop__operator">' + drop.operator + '</span><br>' +
+        '<span class="drop__numbers number-2">' + drop.num2 + '</span>' +
         '</div>'
     );
 
     dropAappearance((drop.id));
-    setTimeout(function () {
-        alternativeMoveDrop(drop.id)
-    }, 10);
-    console.log(drop.time);
+    MoveDrop(drop.id);
+    // setTimeout(function () {
+    //     MoveDrop(drop.id)
+    // }, 50);
+    // console.log();
 }
-
-let alternativeRemoveDrop = function(id) {
+//-----------------
+let alternativeRemoveDrop = function (id) {
     // пробегаешь по массиву и ищешь элемент с таким айди. удаляешь из html, удаляешь его через drops.splice
 }
 
-let controller = function() {
+let addDrop = function () {
+    setInterval(function () {
+        startDrop()
+    }, 5000)
+}
+
+let controller = function () {
     for (let drop of drops) {
-        if(drop.time + 3000 > Date.now()) {
-            alert ('lol');
-        }
+        if (drop.time + 5000 < Date.now()) alert('lol');
     }
 }
 
-/* End alternative code */
-
-
-
-
-function addDrop() {
-    gameField.insertAdjacentHTML('afterbegin',
-        '<div class="drop"><span class="drop__numbers number-1"></span><br><span class="drop__operator"></span><br><span class="drop__numbers number-2"></span></div>');
-
-    drop = doc.querySelector('.drop'),
-    randomNumber = doc.querySelectorAll('.drop__numbers'),
-    operatorsDrop = doc.querySelector('.drop__operator'),
-    getRandomInRange();
-    arrayRandElement(arrOperators);
-    dropAappearance();
-    moveDrop();
-
-}
-
-
-//---Random drop values--------------
-function getRandomInRange() {
-    for (let number of randomNumber) {
-        function getRandom(min, max) {
-            number.textContent = Math.floor(Math.random() * (max - min + 1)) + min;
+let comparisonOfDropAndInputValues = () => {
+    let dropIndex = -1;
+    let dropId = 0;
+    console.log(display.value);
+    for (var i = 0; i < drops.length; i++) {
+        if (drops[i].result == display.value) {
+            dropIndex = i;
+            dropId = drops[i].id;
         };
-        getRandom(1, 100);
-    };
+    }
+
+    let audioPop = new Audio();
+    let audioSplash = new Audio();
+    let audioError = new Audio();
+    let scorePlus = doc.getElementById('score-20');
+    let scoreMines = doc.getElementById('score-30');
+
+    audioPop.src = '../sounds/pop-drop.mp3';
+    audioSplash.src = '../sounds/splash-drop.mp3';
+    audioError.src = '../sounds/error.mp3';
+
+    if (dropIndex !== -1) {
+        drops.splice(dropIndex, 1);
+        score.textContent = Number(score.textContent) + 20;
+        scorePlus.classList.add('score-active');
+        setTimeout(function() {scorePlus.classList.remove('score-active')}, 1000);
+        display.value = '';
+        audioPop.play();
+        audioSplash.play();
+        splashDrop(dropId);
+    } else {
+        score.textContent = Number(score.textContent) - 30;
+        scoreMines.classList.add('score-active');
+        setTimeout(function() {scoreMines.classList.remove('score-active')}, 1000);
+        display.value = '';
+        audioError.play();
+    }
 }
 
-function arrayRandElement(arr) {
-    let rand = Math.floor(Math.random() * arr.length);
-    operatorsDrop.textContent = arr[rand];
+let splashDrop = function (dropId) {
+    let drop = doc.querySelector('.drop-' + dropId);
+    drop.classList.add('drop-splash'); 
+    setTimeout(function() {
+        drop.remove();
+    }, 1000)  
 }
-
-//--Accidental drop appearance------
-// function dropAappearance() {
-//     function randomDropAappearance(min, max) {
-//         drop.style.left = (Math.floor(Math.random() * (max - min + 1)) + min) - gameField.children[0].clientWidth + 'px';
-//     };
-
-//     randomDropAappearance(gameField.children[0].clientWidth, gameField.clientWidth);
-// }
-
-
-//---Droplet movement---------------
-// function moveDrop() {
-//     let setClear = setInterval(fallDrop, 10);
-
-//     function fallDrop() {
-//         if (posDrop == gameField.clientHeight
-//             - gameField.children[1].clientHeight
-//             - gameField.children[0].clientHeight) {
-//             clearInterval(setClear)
-//         } else {
-//             posDrop++;
-//             drop.style.top = posDrop + 'px'
-//         };
-//     }
-// }
-
-
-
-
 
 
 btnPlay.addEventListener('click', () => {
-    alternativeAddDrop();
+    startDrop();
     // addDrop();
-    // getRandomInRange();
-    // arrayRandElement(arrOperators);
-    // dropAappearance ();
-    // moveDrop();
+    // setInterval(function() {controller()}, 100);
+
+
+})
+
+enterBtn.addEventListener('click', () => {
+    comparisonOfDropAndInputValues();
+
+
 
 })
