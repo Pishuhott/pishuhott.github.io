@@ -1,14 +1,33 @@
-let doc = document,
-    numbersBtn = doc.querySelectorAll('.btn-number'),
-    clearBtns = doc.querySelectorAll('.btn-clear'),
-    enterBtn = doc.querySelector('.btn-enter'),
-    display = doc.querySelector('.input'),
-    gameField = doc.querySelector('.game-field'),
-    arrOperators = ['-', '+', '*'],
-    resyltDrop,
-    btnPlay = doc.querySelector('.play'),
-    score = doc.querySelector('.score');
+let doc = document;
+let numbersBtn = doc.querySelectorAll('.btn-number');
+let clearBtns = doc.querySelectorAll('.btn-clear');
+let enterBtn = doc.querySelector('.btn-enter');
+let display = doc.querySelector('.input');
+let gameField = doc.querySelector('.game-field');
+let arrOperators = ['-', '+', '*'];
+let btnStatr = doc.querySelector('.start');
+let btnPlay = doc.querySelector('.play');
+let score = doc.querySelector('.score');
+let bestScore = doc.querySelector('.best-score');
+let scorePlus = doc.getElementById('score-20');
+let scoreMines = doc.getElementById('score-30');
+let resultsWindow = doc.querySelector('.results-window');
+let introwindow = doc.querySelector('.intro-window');
+let dropLive = doc.querySelectorAll('.lives');
+let speedDrop = 10000;
+let resyltDrop;
+let timeId;
+let audioPop = new Audio();
+let audioSplash = new Audio();
+let audioError = new Audio();
+let audioFallInSea = new Audio;
+let audioGameOver = new Audio();
 
+audioPop.src = './sounds/pop-drop.mp3';
+audioSplash.src = './sounds/splash-drop.mp3';
+audioError.src = './sounds/error.mp3';
+audioFallInSea.src = './sounds/fall-in-sea.mp3';
+audioGameOver.src = './sounds/game-over.mp3';
 
 
 
@@ -101,7 +120,7 @@ let MoveDrop = function (id) {
 
     dorp.style.top = gameField.clientHeight -
         gameField.lastElementChild.clientHeight -
-        dorp.clientHeight + 5 + 'px';
+        dorp.clientHeight + 20 + 'px';
 }
 
 let resultDrop = function (num1, operator, num2) {
@@ -113,16 +132,21 @@ let startDrop = function () {
     let drop = new Object();
     drop.id = dropCounter;
     drop.operator = GenerateOperator();
+    let tempNumber;
     // if (drop.operator == '/') {
     //     //отдельная логика для деления
     // } else {
     // }
     drop.num1 = GenerateNumber(1, 10); // =  генерируешь первое число
     drop.num2 = GenerateNumber(1, 10); // = генерируешь второе число
+    if (drop.num1 < drop.num2) {
+        tempNumber = drop.num1;
+        drop.num1 = drop.num2;
+        drop.num2 = tempNumber;
+    };
+
     drop.result = resultDrop(drop.num1, drop.operator, drop.num2);
-
     drop.time = Date.now();
-
     drops.push(drop); // добавляем в массив
 
     gameField.insertAdjacentHTML('afterbegin',
@@ -135,87 +159,164 @@ let startDrop = function () {
 
     dropAappearance((drop.id));
     MoveDrop(drop.id);
-    // setTimeout(function () {
-    //     MoveDrop(drop.id)
-    // }, 50);
-    // console.log();
 }
 //-----------------
 let alternativeRemoveDrop = function (id) {
     // пробегаешь по массиву и ищешь элемент с таким айди. удаляешь из html, удаляешь его через drops.splice
 }
 
-let addDrop = function () {
-    setInterval(function () {
-        startDrop()
-    }, 5000)
+let fallCounter = 0;
+let liveCounter = 0;
+
+let getBestScore = function () {
+    if (localStorage.getItem('ScoreStorege') === null) {
+        bestScore.textContent = 0;
+    } else {
+        bestScore.textContent = localStorage.getItem('ScoreStorege');
+    }
+}
+
+let setBestScore = function () {
+    if (score.textContent > Number(localStorage.getItem('ScoreStorege'))) {
+        localStorage.setItem('ScoreStorege', score.textContent);
+    }
 }
 
 let controller = function () {
-    for (let drop of drops) {
-        if (drop.time + 5000 < Date.now()) alert('lol');
-    }
-}
-
-let comparisonOfDropAndInputValues = () => {
     let dropIndex = -1;
     let dropId = 0;
-    console.log(display.value);
-    for (var i = 0; i < drops.length; i++) {
-        if (drops[i].result == display.value) {
+    let wave = doc.querySelector('.wave');
+
+    for (let i = 0; i < drops.length; i++) {
+        if (drops[i].time + 10000 < Date.now()) {
+            fallCounter++;
+            liveCounter++;
             dropIndex = i;
             dropId = drops[i].id;
+            drops.splice(dropIndex, 1);
+            doc.querySelector('.drop-' + dropId).remove();
+            incorrectUnswer();
+            wave.style.height = wave.clientHeight + 20 + 'px';
+            audioFallInSea.currentTime = 0;
+            audioFallInSea.play();
+
+            if (liveCounter >= 3) {
+                return;
+            } else {
+                doc.querySelector('.live-' + liveCounter).classList.add('live-delete');
+            }
         };
     }
 
-    let audioPop = new Audio();
-    let audioSplash = new Audio();
-    let audioError = new Audio();
-    let scorePlus = doc.getElementById('score-20');
-    let scoreMines = doc.getElementById('score-30');
 
-    audioPop.src = '../sounds/pop-drop.mp3';
-    audioSplash.src = '../sounds/splash-drop.mp3';
-    audioError.src = '../sounds/error.mp3';
 
-    if (dropIndex !== -1) {
-        drops.splice(dropIndex, 1);
-        score.textContent = Number(score.textContent) + 20;
-        scorePlus.classList.add('score-active');
-        setTimeout(function() {scorePlus.classList.remove('score-active')}, 1000);
-        display.value = '';
-        audioPop.play();
-        audioSplash.play();
-        splashDrop(dropId);
-    } else {
-        score.textContent = Number(score.textContent) - 30;
-        scoreMines.classList.add('score-active');
-        setTimeout(function() {scoreMines.classList.remove('score-active')}, 1000);
-        display.value = '';
-        audioError.play();
+    if (fallCounter == 3) {
+        setBestScore();
+        clearInterval(timeId);
+        audioGameOver.play();
+        resultsWindow.classList.add('window-active');
     }
+}
+
+
+let incorrectUnswer = function () {
+    score.textContent = Number(score.textContent) - 20;
+    scoreMines.classList.add('score-active');
+    setTimeout(function () {
+        scoreMines.classList.remove('score-active')
+    }, 1000);
+    display.value = '';
+}
+
+let points = 10;
+
+let comparisonOfDropAndInputValues = function () {
+    if (display.value === '') {
+        return;
+    } else {
+        let dropIndex = -1;
+        let dropId = 0;
+
+        for (let i = 0; i < drops.length; i++) {
+            if (drops[i].result == display.value) {
+                dropIndex = i;
+                dropId = drops[i].id;
+            };
+        }
+
+        if (dropIndex !== -1) {
+            drops.splice(dropIndex, 1);
+            score.textContent = Number(score.textContent) + points;
+            scorePlus.classList.add('score-active');
+            setTimeout(function () {
+                scorePlus.classList.remove('score-active')
+            }, 1000);
+            display.value = '';
+            audioPop.currentTime = 0;
+            audioPop.play();
+            audioSplash.currentTime = 0;
+            audioSplash.play();
+            splashDrop(dropId);
+            points += 1;
+
+        } else {
+            incorrectUnswer();
+            audioError.currentTime = 0;
+            audioError.play();
+        };
+
+        if (Number(score.textContent) >= 200) {
+            speedDrop = 3000;
+            clearInterval(timeId);
+            timeId = setInterval(function () {
+                startDrop();
+            }, speedDrop);
+
+        } else if (Number(score.textContent) >= 140) {
+            speedDrop = 5000;
+            clearInterval(timeId);
+            timeId = setInterval(function () {
+                startDrop();
+            }, speedDrop);
+
+        } else if (Number(score.textContent) >= 80) {
+            speedDrop = 8000;
+            clearInterval(timeId);
+            timeId = setInterval(function () {
+                startDrop();
+            }, speedDrop);
+        };
+    };
 }
 
 let splashDrop = function (dropId) {
     let drop = doc.querySelector('.drop-' + dropId);
-    drop.classList.add('drop-splash'); 
-    setTimeout(function() {
+    drop.classList.add('drop-splash');
+    setTimeout(function () {
         drop.remove();
-    }, 1000)  
+    }, 1000)
 }
 
+btnStatr.addEventListener('click', () => {
+    introwindow.classList.remove('window-active');
+
+});
 
 btnPlay.addEventListener('click', () => {
-    startDrop();
-    // addDrop();
-    // setInterval(function() {controller()}, 100);
+    setTimeout(function () {
+        startDrop();
+        setInterval(function () {
+            controller()
+        }, 100);
+
+        timeId = setInterval(function () {
+            startDrop();
+        }, 10000);
+    }, 1000);
 
 
-})
+});
 
 enterBtn.addEventListener('click', () => {
     comparisonOfDropAndInputValues();
-
-
-
 })

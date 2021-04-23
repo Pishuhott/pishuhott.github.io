@@ -2,16 +2,186 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Heebo', sans-serif;
     font-size: 10px;
 }
 
 .wrapper {
     max-width: 1020px;
-    height: 80vh;
+    height: 90vh;
     margin: auto;
     display: grid;
     grid-template-columns: 2fr 1fr;
     border: 2px solid black;
+    position: relative;
+}
+
+h2 {
+    font-size: 10rem;
+    font-weight: 800;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-color: #005e9d;
+    text-shadow: 0px 3px 3px rgba(255, 255, 255, 0.5);
+    user-select: none;
+}
+
+h3 {
+    font-size: 2.5rem;
+    color: #5b96be;
+    user-select: none;
+}
+
+button {
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    transition: all .3s ease;
+}
+
+button:focus {
+    display: none;
+}
+
+.intro-window {
+    position: absolute;
+    top: -110%;
+    width: 100%;
+    height: 100%;
+    transition: all 1s ease;
+    background: radial-gradient(#c5ddf1, #94b6d1);
+    z-index: 5;
+    display: grid;
+    grid-template-rows: 2fr 1fr 3fr 1fr;
+    align-items: center;
+	justify-items: center;
+}
+
+.intro-drops {
+    position: relative;
+    margin: 0 auto;
+    min-width: 1020px;
+    height: 50vh;
+}
+
+.drop-left, .drop-rigth {
+    position: absolute;
+    width: 8%;
+    height: 30%;
+    min-width: 80px;
+    min-height: 120px;
+    background-image: url(../../img/drop.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+
+.drop-left {
+    top: 5%;
+    left: 20%;
+    opacity: 0.8;
+    z-index: 2;
+}
+
+.drop-center {
+    position: absolute;
+    width: 28%;
+    height: 50%;
+    min-width: 200px;
+    min-height: 415px;
+    top: 8%;
+    left: 35%;
+    background-image: url(../../img/main-drop.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.drop-rigth {
+    top: 20%;
+    right: 20%;
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.intro-buttons button {
+    padding: 5px 10px;
+    margin: 0 10px;
+    border: 4px solid #5b96be;
+    border-radius: 10px;
+    font-size: 2.5rem;
+    font-family: 'Fredoka One', cursive;
+    color: #5b96be;
+    background: none;
+    outline: none;
+    user-select: none;
+}
+
+.howToPlay:hover {
+    border: 4px solid #cf6706;
+    background: #f8b445;
+    color: white;
+}
+.start:hover {
+    background: #ff0000;
+    border: 4px solid #c30000;
+    color: white;
+}
+
+.howToPlay:active, .start:active {
+    font-size: 2rem;
+}
+
+.results-window {
+    position: absolute;
+    top: -110%;
+    width: 100%;
+    height: 100%;
+    transition: all 1s ease;
+    background: radial-gradient(#c5ddf1, #94b6d1);
+    z-index: 5;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    align-items: center;
+	justify-items: center;
+}
+
+.window-active {
+    top: 0;
+}
+
+.results-window p {
+    margin: 10px 0;
+    font-size: 2.5rem;
+    color: #5b96be;
+}
+
+.results-window span {
+    font-size: 3rem;
+    color: tomato;
+    font-weight: bold;
+}
+
+.player-account {
+    margin: auto;
+    width: 25%;
+    background: #4fc3839b;
+    border-radius: 20px;
+    ;
+}
+
+.btn-continue {
+    padding: 5px 10px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    background: #4fc383;
+    border: 2px solid #009644;
+    border-radius: 10px;
 }
 
 .game-field {
@@ -24,17 +194,15 @@
     position: absolute;
     display: inline-block;
     background: url(../../img/drop.svg) no-repeat center;
-    background-size: cover;
-    width: 12%;
-    height: 15%;
+    background-size: 65%;
+    width: 20%;
+    height: 20%;
     text-align: center;
     top: 0;
     transition: top 10s linear;
 }
 
 .drop-splash {
-    width: 20%;
-    height: 20%;
     background: url(../../img/drop-splash.svg) no-repeat center;
     background-size: contain;
     animation: splash 1s linear;
@@ -62,18 +230,18 @@
 }
 
 .drop .number-1 {
-    top: 30%;
-    left: 40%;
+    top: 35%;
+    left: 45%;
 }
 
 .drop__operator {
     top: 45%;
-    left: 15%;
+    left: 25%;
 }
 
 .drop .number-2 {
-    top: 60%;
-    left: 40%;
+    top: 55%;
+    left: 45%;
 }
 
 .wave {
@@ -119,7 +287,7 @@
     }
 }
 
-.panel {
+.panel-game, .panel-settings {
     background-color: rgb(203, 232, 229);
     text-align: center;
 }
@@ -141,6 +309,7 @@
 
 .panel__score span {
     font-size: 3.5rem;
+    font-weight: bold;
     color: crimson;
 }
 
@@ -164,7 +333,7 @@
     animation: score-active 1s linear;
 }
 
-@keyframes score-active{
+@keyframes score-active {
     0% {
         opacity: 0;
     }
@@ -174,6 +343,42 @@
     100% {
         opacity: 0;
     }
+}
+
+.panel__lives {
+    margin: auto;
+    margin-top: 20px;
+    width: 60%;
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    align-items: center;
+	justify-items: center;
+}
+
+.lives {
+    width: 50%;
+    height: 75%;
+    min-width: 26px;
+    min-height: 40px;
+    pointer-events: none;
+}
+
+.panel__lives div {
+    background-image: url(../../img/drop.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    transition: all 1s ease;
+}
+
+.panel__lives p {
+    font-family: 'Fredoka One', cursive;
+    font-weight: bold;
+    font-size: 2.5rem;
+    color: red;
+}
+
+.live-delete {
+    opacity: 0;
 }
 
 .panel__calc {
@@ -208,10 +413,6 @@ input {
     grid-template-rows: repeat(4, 1fr);
 }
 
-button {
-    cursor: pointer;
-}
-
 .panel__buttons button:nth-child(4) {
     grid-column: 4 / 4;
     grid-row: 1 / 3;
@@ -236,6 +437,158 @@ button {
     box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-.panel__buttons__play {
+.panel__buttons__tols {
+    margin: auto;
     margin-top: 50px;
+    width: 80%;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.panel__buttons__tols button {
+    transition: all .3s slice;
+}
+
+.panel__buttons__tols button:nth-child(1) {
+    grid-column: 1 / 3;
+}
+
+.panel__buttons__tols button:nth-child(2) {
+    grid-column: 3 / 4;
+}
+
+.tols__howToPlay, .play {
+    padding: 5px 10px;
+    border: 4px solid #5b96be;
+    border-radius: 10px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: #5b96be;
+    background: none;
+}
+
+.play:hover {
+    background: #ff0000;
+    border: 4px solid #c30000;
+    color: white;
+}
+
+.play:active, .tols__howToPlay:active  {
+    font-size: 1.5rem;
+}
+
+.sound-off, .settings, .full-scren {
+    margin: 0 10px;
+    font-size: 2.5rem;
+    border-radius: 10px;
+    background: none;
+}
+
+.sound-off {
+    background: #ff0000;
+    border: 4px solid #c30000;
+    color: white;
+}
+
+.settings, .full-scren {
+    border: 4px solid #5b96be;
+    color: #5b96be;
+} 
+
+.full-scren {
+    border: 4px solid #5b96be;
+    color: #5b96be;
+}
+
+.settings:hover, .full-scren:hover {
+    color: white;
+    background: #b3d3e9;
+}
+
+
+.panel-settings {
+    width: 34%;
+    height: 100%;
+    right: 0;
+    position: absolute;
+    z-index: 2;
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
+    align-items: center;
+	justify-items: center;
+}
+.settings-checkbox {
+    margin: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: start;
+}
+
+.checkbox-element {
+    margin-bottom: 10px;
+    user-select: none;
+}
+
+.checkbox-element p {
+    font-size: 1.5rem;
+    font-weight: bold;    
+}
+
+.checkbox {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: 2px solid #5b96be;;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.checkbox-active span {
+    display: inline-block;
+    margin-top: 3px;
+    width: 10px;
+    height: 10px;
+    background: #5b96be;;
+    border-radius: 50%;
+    vertical-align: text-top;
+    transition: all 0.2s ease-in;
+
+}
+
+.checkbox-numbers .checkbox-element {
+    margin-bottom: 35px;
+}
+
+
+.setting-buttons button{
+    width: 60px;
+    height: 60px;
+    margin: 0 10px;
+    padding: 5px 10px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem;
+    border-radius: 10px;
+    background: none;
+    border: 4px solid #5b96be;
+    color: #5b96be;
+}
+
+.setting-ok:hover {
+    color: white;
+    background: #4fc383;
+    border: 4px solid #009644;
+}
+
+.setting-cancel:hover {
+    background: #ff0000;
+    border: 4px solid #c30000;
+    color: white;
+}
+
+.setting-ok:active, .setting-cancel:active {
+    font-size: 2rem;
 }
