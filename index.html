@@ -1,144 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&amp;display=swap"
-        rel="stylesheet">
+    rel="stylesheet">
+
     <link rel="stylesheet" href="./scr/styles/index.css">
     <title>Raindrops</title>
 </head>
-
 <body>
-    <div id="wraperr" class="wrapper">
-        <div class="intro-window">
-            <!-- window-active -->
-            <h2>RAINDROPS</h2>
-            <h3>It's raining numbers! Solve the equations before they fill the sea.</h3>
-            <div class="intro-drops">
-                <div class="drop-left"></div>
-                <div class="drop-center"></div>
-                <div class="drop-rigth"></div>
-            </div>
-            <div class="intro-buttons">
-                <button class="howToPlay">How to play?</button>
-                <button class="start">Start</button>
-            </div>
+    <div class="intro-window">
+        <!-- window-active -->
+        <h2>RAINDROPS</h2>
+        <h3>It's raining numbers! Solve the equations before they fill the sea.</h3>
+        <div class="intro-drops">
+            <div class="drop-left"></div>
+            <div class="drop-center"></div>
+            <div class="drop-rigth"></div>
         </div>
-
-        <div class="results-window">
-            <h2>GAME OVER</h2>
-            <div class="results-table">
-                <p class="game-time">Game time: <span>00:00</span></p>
-                <p class="result-total">Total equations: <span>0</span></p>
-                <p class="result-correct">Correct answers: <span>0</span></p>
-                <p class="result-wrong">Wrong answer: <span>0</span></p>
-
-                <div class="player-account">
-                    <p class="result-wrong">Your account: <span>0</span></p>
-                    <p class="result-wrong">Best score: <span>0</span></p>
-                </div>
-            </div>
-            <div class="regame">
-                <button class="btn-continue">Continue</button>
-            </div>
-        </div>
-
-        <div class="game-field">
-            <div class="wave">
-                <div class="water"></div>
-                <div class="water water-2"></div>
-            </div>
-
-        </div>
-
-        <div class="panel-game">
-            <div class="panel__score">
-                <p>Score: <span class="score"> 0</span>
-                    <span id="score-20">+20</span>
-                    <span id="score-30">-30</span>
-                </p>
-                <p>Best score: <span class="best-score"> 0</span></p>
-            </div>
-
-            <div class="panel__lives">
-                <p>Lives</p>
-                <div class="live-2 lives"></div>
-                <div class="live-1 lives"></div>
-            </div>
-            <div class="panel__calc">
-
-                <input class="input" type="text" maxlength="5" value="" disabled>
-                <div class="panel__buttons">
-                    <button data-key="103" class="btn-number btn">7</button>
-                    <button data-key="104" class="btn-number btn">8</button>
-                    <button data-key="105" class="btn-number btn">9</button>
-                    <button data-key="46" class="btn-clear btn" id="clear">Clear</button>
-                    <button data-key="100" class="btn-number btn">4</button>
-                    <button data-key="101" class="btn-number btn">5</button>
-                    <button data-key="102" class="btn-number btn">6</button>
-                    <button data-key="97" class="btn-number btn">1</button>
-                    <button data-key="98" class="btn-number btn">2</button>
-                    <button data-key="99" class="btn-number btn">3</button>
-                    <button data-key="13" class="btn-enter btn" id="enter">Enter</button>
-                    <button data-key="96" class="btn-number btn">0</button>
-                    <button data-key="8" class="btn-clear btn" id="delete">Delete</button>
-                </div>
-            </div>
-
-            <div class="panel__buttons__tols">
-                <button class="howToPlay tols__howToPlay">How to play?</button>
-                <button class="play">Play</button>
-                <button class="sound-off">♫</button>
-                <button class="settings">⚙</button>
-                <button class="full-scren">⛶</button>
-            </div>
-        </div>
-
-        <div class="panel-settings">
-            <h3>fdfdffdfdf</h3>
-            <div class="settings-checkbox">
-
-                <div class="checkbox-operators">
-                    <div class="checkbox-element">
-                        <div class="checkbox"><span></span></div>
-                        <p>Addition and Subtraction</p>
-                    </div>
-                    <div class="checkbox-element">
-                        <div class="checkbox"><span></span></div>
-                        <p>Multiplication and Division</p>
-                    </div>
-                    <div class="checkbox-element">
-                        <div class="checkbox checkbox-active"><span></span></div>
-                        <p>All operations</p>
-                    </div>
-                </div>
-
-                <div class="checkbox-numbers">
-                    <div class="checkbox-element">
-                        <div class="checkbox checkbox-active"><span></span></div>
-                        <p>1-10</p>
-                    </div>
-                    <div class="checkbox-element">
-                        <div class="checkbox"><span></span></div>
-                        <p>1-20</p>
-                    </div>
-                    <div class="checkbox-element">
-                        <div class="checkbox"><span></span></div>
-                        <p>1-40</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="setting-buttons">
-                <button class="setting-ok">✔</button>
-                <button class="setting-cancel">␘</button>
-            </div>
+        <div class="intro-buttons">
+            <button class="howToPlay">How to play?</button>
+            <button class="start">Start</button>
         </div>
     </div>
-    <script src="./scr/js/index.js"></script>
+    <script src="scr/js/index.js"></script>
 </body>
-
 </html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./styles/play.css">
+    <title>Raindrops</title>
+</head>
+
+<body>
+    <div id="wraperr" class="wrapper">
+        <div class="intro-window">
+            <!-- window-active -->
+            <h2>RAINDROPS</h2>
+            <h3>It's raining numbers! Solve the equations before they fill the sea.</h3>
+            <div class="intro-drops">
+                <div class="drop-left"></div>
+                <div class="drop-center"></div>
+                <div class="drop-rigth"></div>
+            </div>
+            <div class="intro-buttons">
+                <button class="howToPlay">How to play?</button>
+                <button class="start">Start</button>
+            </div>
+        </div>
+
+        <div class="results-window">
+            <h2>GAME OVER</h2>
+            <div class="results-table">
+                <p class="game-time">Game time: 
+                    <span class="stopwatch-min">00</span><span class="stopwatch-sec">:00</span>
+                </p>
+                <div class="results-drops">
+                    <p>Total equations: <span class="result-drops-total">0</span></p>
+                    <p>Correct answers: <span class="result-drops-correct">0</span></p>
+                    <p>Wrong answer: <span class="result-drops-wrong">0</span></p>
+                </div>
+
+                <div class="player-account">
+                    <p>Your account: <span class="results-score">0</span></p>
+                    <p>Best score: <span class="results-best-score">0</span></p>
+                </div>
+            </div>
+            <div class="regame">
+                <button class="btn-continue">Continue</button>
+            </div>
+        </div>
+
+        <div class="game-field">
+            <div class="wave">
+                <div class="water"></div>
+                <div class="water water-2"></div>
+            </div>
+
+        </div>
+
+        <div class="panel-game">
+            <div class="panel__score">
+                <p>Score: <span class="score">0</span>
+                    <span id="score-10">+10</span>
+                    <span id="score-30">-20</span>
+                </p>
+                <p>Best score: <span class="best-score">0</span></p>
+            </div>
+
+            <div class="panel__lives">
+                <p>Lives</p>
+                <div class="live-2 lives"></div>
+                <div class="live-1 lives"></div>
+            </div>
+            <div class="panel__calc">
+
+                <input class="display" type="text" maxlength="5" value="" disabled>
+                <div class="panel__buttons">
+                    <button data-key="103" class="btn-number btn">7</button>
+                    <button data-key="104" class="btn-number btn">8</button>
+                    <button data-key="105" class="btn-number btn">9</button>
+                    <button data-key="46" class="btn-clear btn" id="clear">Clear</button>
+                    <button data-key="100" class="btn-number btn">4</button>
+                    <button data-key="101" class="btn-number btn">5</button>
+                    <button data-key="102" class="btn-number btn">6</button>
+                    <button data-key="97" class="btn-number btn">1</button>
+                    <button data-key="98" class="btn-number btn">2</button>
+                    <button data-key="99" class="btn-number btn">3</button>
+                    <button data-key="13" class="btn-enter btn" id="enter">Enter</button>
+                    <button data-key="96" class="btn-number btn">0</button>
+                    <button data-key="8" class="btn-clear btn" id="delete">Delete</button>
+                </div>
+            </div>
+
+            <div class="panel__buttons__tols">
+                <button class="howToPlay tols__howToPlay">How to play?</button>
+                <button class="play">Play</button>
+                <button class="sound-off">♫</button>
+                <button class="settings">⚙</button>
+                <button class="full-scren">⛶</button>
+            </div>
+        </div>
+
+        <div class="panel-settings">
+            <h3>fdfdffdfdf</h3>
+            <div class="settings-checkbox">
+                <div class="checkbox-operators checkboxs">
+                    <h3>Equation type</h3>
+                    <label>
+                        <input type="radio" name="operator-radio" value="+ -" checked><br>
+                        Addition and subtraction
+                    </label>
+                    <label>
+                        <input type="radio" name="operator-radio" value="* /"><br>
+                        Multiplication and division
+                    </label>
+                    <label>
+                        <input type="radio" name="operator-radio" value="+ - * /" checked><br>
+                        All operations
+                    </label>
+                </div>
+
+                <div class="checkbox-numbers checkboxs">
+                    <h3>Range of numbers</h3>
+                    <label>
+                        <input type="radio" value="10" name="numbers-radio" checked><br>
+                        1-10
+                    </label>
+                    <label>
+                        <input type="radio" value="20" name="numbers-radio"><br>
+                        1-20
+                    </label>
+                    <label>
+                        <input type="radio" value="40" name="numbers-radio"><br>
+                        1-40
+                    </label>
+                </div>
+            </div>
+
+            <div class="setting-buttons">
+                <button class="setting-ok setting-closed">✔</button>
+                <button class="setting-cancel setting-closed">␘</button>
+            </div>
+        </div>
+    </div>
+    <script src="./js/play.js"></script>
+</body>
+
+</html>
