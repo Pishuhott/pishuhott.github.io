@@ -8,7 +8,7 @@
 
 .wrapper {
     max-width: 1020px;
-    height: 100%;
+    height: 100vh;
     margin: auto;
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -476,92 +476,3 @@ button:focus {
     transform: scale(0.95);
 }
 
-.panel-settings {
-    position: absolute;
-    width: 34%;
-    height: 100%;
-    right: -35%;
-    z-index: 2;
-    display: grid;
-    grid-template-rows: 1fr 2fr 1fr;
-    align-items: center;
-    justify-items: center;
-    transition: all 1s linear;
-}
-
-.settings-active {
-    right: 0;
-}
-
-.settings-checkbox {
-    margin: 0 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-.checkboxs h3 {
-    margin-bottom: 20px;
-}
-
-.checkbox-numbers label {
-    margin-bottom: 34px;
-}
-
-input[type=radio] {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-}
-
-label {
-    margin: 5px 10px;
-    font-size: 2rem;
-    font-weight: bold;
-    display: block;
-    text-align: center;
-}
-
-.checkbox-active span {
-    display: inline-block;
-    margin-top: 3px;
-    width: 10px;
-    height: 10px;
-    background: #5b96be;
-    border-radius: 50%;
-    vertical-align: text-top;
-    transition: all 0.2s ease-in;
-}
-
-.checkbox-numbers .checkbox-element {
-    margin-bottom: 35px;
-}
-
-.setting-buttons button {
-    width: 60px;
-    height: 60px;
-    margin: 0 10px;
-    padding: 5px 10px;
-    font-family: 'Fredoka One', cursive;
-    font-size: 2.5rem;
-    border-radius: 10px;
-    background: none;
-    border: 4px solid #5b96be;
-    color: #5b96be;
-    transition: all .3s ease;
-}
-
-.setting-ok:hover {
-    color: white;
-    background: #4fc383;
-    border: 4px solid #009644;
-}
-
-.setting-cancel:hover {
-    background: #ff0000;
-    border: 4px solid #c30000;
-    color: white;
-}
-
-.setting-ok:active, .setting-cancel:active {
-    transform: scale(0.95);
-}

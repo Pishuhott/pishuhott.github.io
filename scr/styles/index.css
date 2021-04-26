@@ -85,31 +85,32 @@ h3 {
 }
 
 .intro-buttons button {
+    font-size: 2.5rem;
+    font-family: 'Fredoka One', cursive;
     padding: 5px 10px;
     margin: 0 10px;
     border: 4px solid #5b96be;
     border-radius: 10px;
-    font-size: 2.5rem;
-    font-family: 'Fredoka One', cursive;
     color: #5b96be;
     background: none;
     outline: none;
     cursor: pointer;
     user-select: none;
+    transition: all .3s ease;
 }
 
 .howToPlay:hover {
-    border: 4px solid #cf6706;
-    background: #f8b445;
     color: white;
+    background: #ffa500;
+    border: 4px solid #ff8000;
 }
 
 .start:hover {
+    color: white;
     background: #ff0000;
     border: 4px solid #c30000;
-    color: white;
 }
 
-.howToPlay:active, .start:active {
-    font-size: 2rem;
+button:active {
+    transform: scale(0.95);
 }
