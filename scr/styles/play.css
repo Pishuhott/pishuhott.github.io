@@ -7,11 +7,11 @@
 }
 
 .wrapper {
-    max-width: 1020px;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     margin: auto;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 310px;
     border: 2px solid black;
     position: relative;
     overflow: hidden;
@@ -38,7 +38,7 @@ button {
     font-weight: bold;
     cursor: pointer;
     user-select: none;
-    transition: all .3s ease;
+    transition: all .3s slice;
 }
 
 button:focus {
@@ -87,20 +87,20 @@ button:focus {
 
 .results-table {
     margin: auto;
-    width: 40%;
+    width: 100%;
     text-align: center;
 }
 
 .results-drops {
     margin: auto;
-    width: 70%;
+    width: 35%;
     background: #8dc34f9b;
     border-radius: 20px;
 }
 
 .player-account {
     margin: auto;
-    width: 70%;
+    width: 35%;
     background: #4fc3839b;
     border-radius: 20px;
 }
@@ -132,19 +132,19 @@ button:focus {
     display: inline-block;
     background: url(../../img/drop.svg) no-repeat center;
     background-size: 65%;
-    width: 20%;
-    height: 20%;
+    width: 120px;
+    height: 170px;
     text-align: center;
     top: 0;
-    transition: top 10s linear;
+    transition: top 15s linear;
 }
 
 .drop-bonus {
     background: url(../../img/bonus-drop.svg) no-repeat center;
     background-size: 65%;
-    width: 20%;
-    height: 20%;
-    transition: top 5s linear;
+    /* width: 20%;
+    height: 20%; */
+    transition: top 10s linear;
 }
 
 .drop-splash, .drop-splash-bonus {
@@ -278,22 +278,18 @@ button:focus {
     font-weight: bold;
     color: crimson;
 }
+#score-10, #score-30 {
+    font-size: 5rem;
+    position: absolute;
+    top: 125px;
+    left: -15px;
+    opacity: 0;
+}
 
 #score-10 {
-    font-size: 4rem;
-    position: absolute;
-    top: -5px;
-    right: 5px;
-    opacity: 0;
+    color: rgb(20, 220, 30);
 }
 
-#score-30 {
-    font-size: 4rem;
-    position: absolute;
-    top: -5px;
-    right: 5px;
-    opacity: 0;
-}
 
 .score-active {
     animation: score-active 1s linear;
@@ -349,7 +345,7 @@ button:focus {
 
 .panel__calc {
     width: 80%;
-    height: 100%;
+    height: 360px;
     margin: auto;
     padding: 10px;
     background-color: rgb(231, 223, 194);
@@ -374,8 +370,8 @@ button:focus {
     height: 72%;
     margin: auto;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(4, 25%);
 }
 
 .panel__buttons button:nth-child(4) {
@@ -395,7 +391,14 @@ button:focus {
 .panel__buttons button {
     background-color: white;
     border: 1px solid rgb(167, 167, 167);
-    font-size: 2rem;
+}
+
+.btn-number {
+    font-size: 3.5rem;
+}
+
+.btn-enter, .btn-clear{
+    font-size: 1.8rem;
 }
 
 .panel__buttons button:active {
@@ -413,7 +416,8 @@ button:focus {
 }
 
 .panel__buttons__tols button {
-    transition: all .3s slice;
+    width: 100%;
+    height: 100%;
 }
 
 .panel__buttons__tols button:nth-child(1) {
@@ -425,7 +429,6 @@ button:focus {
 }
 
 .tols__howToPlay, .play {
-    padding: 5px 10px;
     border: 4px solid #5b96be;
     border-radius: 10px;
     font-family: 'Fredoka One', cursive;
@@ -444,14 +447,13 @@ button:focus {
     transform: scale(0.95);
 }
 
-.sound-off, .settings, .full-scren {
-    margin: 0 10px;
+.sound-on, .settings, .full-scren {
     font-size: 2.5rem;
     border-radius: 10px;
     background: none;
 }
 
-.sound-off {
+.sound-on {
     color: white;
     background: #e54444;
     border: 4px solid #b03131;
@@ -467,20 +469,22 @@ button:focus {
     color: #5b96be;
 }
 
-.settings:hover, .full-scren:hover, .sound-off:hover {
+.settings:hover, .full-scren:hover, .sound-on:hover {
     color: white;
     background: #b3d3e9;
 }
 
-.sound-off:active, .settings:active, .full-scren:active {
+.sound-on:active, .settings:active, .full-scren:active {
     transform: scale(0.95);
 }
-
+.sound-off {
+    color: black;
+}
 .panel-settings {
     position: absolute;
-    width: 34%;
+    width: 310px;
     height: 100%;
-    right: -35%;
+    right: -310px;
     z-index: 2;
     display: grid;
     grid-template-rows: 1fr 2fr 1fr;
@@ -564,4 +568,177 @@ label {
 
 .setting-ok:active, .setting-cancel:active {
     transform: scale(0.95);
+}
+
+@media (max-width: 768px){
+    .wrapper {
+        grid-template-columns: 1fr 200px;
+    }
+
+    .panel__score p {
+        font-size: 2rem;
+    }
+
+    .panel__score span {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: crimson;
+    }
+
+    #score-10, #score-30 {
+        font-size: 2.5rem;
+        top: 190px;
+        left: 60px;
+    }
+    .panel__calc {
+        width: 90%;
+        height: 300px;
+    }
+    .display {
+        font-size: 3.5rem;
+        height: 80px;
+    }
+    
+    .btn-number {
+        font-size: 2.2rem;
+    }
+    
+    .btn-enter, .btn-clear{
+        font-size: 1.2rem;
+    }
+
+    .panel__buttons__tols {
+        width: 90%;
+    }
+
+    .tols__howToPlay, .play {
+        font-size: 1.5rem;
+    }
+
+    .panel-settings {
+        width: 200px;
+        grid-template-rows: 2fr 3fr 1fr;
+    }
+
+    .panel-settings h3{
+        font-size: 2rem;
+    }
+
+    .settings-checkbox {
+        grid-template-columns: none;
+        grid-template-rows: 1fr 1fr;
+        height: 90%;
+    }
+
+    input[type=radio] {
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+    }
+
+    label {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .wrapper {
+        grid-template-columns: none;
+        grid-template-rows: 40% 60%;
+    }
+
+    .results-window h2 {
+       font-size: 5rem;
+    }
+    .results-window p {
+        font-size: 2rem;
+    }
+    .results-window span {
+        font-size: 2.5rem;
+    }
+    
+    .results-drops, .player-account {
+        width: 70%;
+    }
+
+    .wave {
+        height: 20%;
+      }
+
+    .drop, .drop-bonus {
+        width: 50px;
+        height: 71px;
+        background-size: 100%;
+    }
+
+    .drop span, .drop-bonus span {
+        font-size: 2rem;
+    }
+    
+    .drop .number-1 {
+        top: 25%;
+        left: 40%;
+    }
+
+    .drop .number-2 {
+        left: 40%;
+    }
+
+    .drop__operator {
+        top: 40%;
+        left: 15%;
+    }
+
+    .panel-game {
+        grid-template-rows: 55px 40px 280px 2fr;
+    }
+    .best-score-elements{
+        display: none;
+    }
+    #score-10, #score-30 {
+        top: 50px;
+    }
+
+    .panel__lives {
+        margin: 5px auto;
+        width: auto;
+    }
+
+    .panel__lives p {
+        font-size: 2rem;
+    }
+    .lives {
+        min-width: 20px;
+        min-height: 30px;
+    }
+
+    .panel__calc {
+        margin: 10px auto;
+        width: 95%;
+        height: 260px;
+    }
+    .display {
+        font-size: 3rem;
+        height: 70px;
+    }
+
+    .btn-enter, .btn-clear{
+        font-size: 1.6rem;
+    }
+
+    .panel__buttons__tols button {
+        width: 90%;
+        height: 90%;
+        font-size: 1.8rem;
+    }
+
+    .panel-settings {
+        width: 100%;
+        height: 100%;
+        right: -100%;
+    }
+
+    .settings-active {
+        right: 0;
+    }
 }

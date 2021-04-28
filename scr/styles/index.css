@@ -21,6 +21,7 @@ h3 {
     font-size: 2.5rem;
     color: #5b96be;
     user-select: none;
+    text-align: center 
 }
 
 .intro-window {
@@ -113,4 +114,68 @@ h3 {
 
 button:active {
     transform: scale(0.95);
+}
+
+@media (min-width: 320px) {
+    h2 {
+
+        font-size: 5rem;
+    }
+    
+    h3 {
+        font-size: 2rem;
+        margin: 0 10px;
+    }
+
+    .intro-drops {
+        min-width: 320px;
+    }
+
+    .drop-left {
+        left: 10%;
+    }
+    
+    .drop-center {
+        left: 15%;
+    }
+    
+    .drop-rigth {
+        right: 10%;
+    }
+}
+
+@media (min-width: 768px) {
+    h2 {
+        font-size: 10rem;
+    }
+    
+    h3 {
+        font-size: 2.5rem;
+    }
+    .intro-drops {
+        min-width: 768px;
+        text-align: center;
+    }
+    
+    .intro-drops {
+        min-width: 768px;
+    }
+     
+    .drop-left {
+        left: 20%;
+    }
+    
+    .drop-center {
+        left: 35%;
+    }
+    
+    .drop-rigth {
+        right: 20%;
+    }
+}
+
+@media (min-width: 1020px) {
+    .intro-drops {
+        min-width: 1020px;
+    }
 }

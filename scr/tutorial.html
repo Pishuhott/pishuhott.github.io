@@ -13,11 +13,11 @@
 
 <body>
     <div id="wraperr" class="wrapper">
-        <div class="results-window">
-            <h2>GAME OVER</h2>
-        </div>
-
         <div class="game-field">
+            <div class="results-window">
+                <h2>GAME OVER</h2>
+            </div>
+    
             <div class="game-drop-container"></div>
             <div class="wave">
                 <div class="water"></div>
@@ -30,16 +30,9 @@
             <div class="panel__score">
                 <p>Score: <span class="score">0</span>
                     <span id="score-10">+10</span>
-                    <span id="score-30">-20</span>
                 </p>
-                <p>Best score: <span class="best-score">0</span></p>
             </div>
 
-            <div class="panel__lives">
-                <p>Lives</p>
-                <div class="live-2 lives"></div>
-                <div class="live-1 lives"></div>
-            </div>
             <div class="panel__calc">
 
                 <input class="display" type="text" maxlength="5" value="" disabled>
@@ -58,14 +51,6 @@
                     <button data-key="96" class="btn-number btn">0</button>
                     <button data-key="8" class="btn-clear btn" id="delete">Delete</button>
                 </div>
-            </div>
-
-            <div class="panel__buttons__tols">
-                <button class="howToPlay tols__howToPlay">How to play?</button>
-                <button class="play">Play</button>
-                <button class="sound-off">♫</button>
-                <button class="settings">⚙</button>
-                <button class="full-scren">⛶</button>
             </div>
         </div>
 

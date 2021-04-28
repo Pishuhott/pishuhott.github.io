@@ -3,7 +3,7 @@ let numbersBtn = doc.querySelectorAll('.btn-number');
 let clearBtns = doc.querySelectorAll('.btn-clear');
 let enterBtn = doc.querySelector('.btn-enter');
 let display = doc.querySelector('.display');
-let dropContainer = doc.querySelector('.game-drop-container');
+let dropContainer = document.querySelector('.game-drop-container');
 let btnSeetting = doc.querySelector('.settings');
 let btnSeettingClosed = doc.querySelectorAll('.setting-closed');
 let btnSettingOk = doc.querySelector('.setting-ok');
@@ -18,16 +18,19 @@ let btnContinue = doc.querySelector('.btn-continue');
 let dropLive = doc.querySelectorAll('.lives');
 let operatorsRadio = doc.getElementsByName('operator-radio');
 let numbersRadio = doc.getElementsByName('numbers-radio');
-let btnStopAudio = doc.querySelector('.sound-off');
+let btnStopAudio = doc.querySelector('.sound-on');
+let btnFullScren = doc.querySelector('.full-scren');
+let audioSea = new Audio();
 let audioPop = new Audio();
 let audioPopBonus = new Audio();
 let audioSplash = new Audio();
 let audioError = new Audio();
-let audioFallInSea = new Audio;
+let audioFallInSea = new Audio();
 let audioGameOver = new Audio();
+let audioOn = true;
 let arrDrops = [];
 let dropsBonus = [];
-let dropCounter = 0; 
+let dropCounter = 0;
 let dropsCorrect = 0;
 let dropsWrong = 0;
 let arrOperators = ['-', '+'];
@@ -36,21 +39,53 @@ let numberLevel = 10;
 let tempNumberLevel = 10;
 let speedDrop = 10000;
 let resyltDrop;
+let timeControler;
 let timeId;
 let timeIdBunus;
 let stopwatch;
 let dropBonus;
 let min = 0;
 let sec = 0;
+let eventList = ['click', 'touchend'];
 
-audioPop.src = '../../sounds/pop-drop.mp3';
-audioPopBonus.src = '../../sounds/correct-bonus-answer.mp3'
-audioSplash.src = '../../sounds/splash-drop.mp3';
-audioError.src = '../../sounds/error.mp3';
-audioFallInSea.src = '../../sounds/fall-in-sea.mp3';
-audioGameOver.src = '../../sounds/game-over.mp3';
+audioSea.src = './../sounds/sea.mp3'
+audioPop.src = './../sounds/pop-drop.mp3';
+audioPopBonus.src = './../sounds/correct-bonus-answer.mp3'
+audioSplash.src = './../sounds/splash-drop.mp3';
+audioError.src = './../sounds/error.mp3';
+audioFallInSea.src = './../sounds/fall-in-sea.mp3';
+audioGameOver.src = './../sounds/game-over.mp3';
 
 
+
+
+let audioPlay = function (audioId, audioOn) {
+    if (audioOn === true) {
+        if (audioId == audioPop) {
+            audioPop.currentTime = 0;
+            audioPop.play();
+        } else if (audioId == audioPopBonus) {
+            audioPopBonus.currentTime = 0;
+            audioPopBonus.play();
+        } else if (audioId == audioSplash) {
+            audioSplash.currentTime = 0;
+            audioSplash.play();
+        } else if (audioId == audioError) {
+            audioError.currentTime = 0;
+            audioError.play();
+        } else if (audioId == audioFallInSea) {
+            audioFallInSea.currentTime = 0;
+            audioFallInSea.play();
+        } else if (audioId == audioGameOver) {
+            audioGameOver.currentTime = 0;
+            audioGameOver.play();
+        }
+        if (audioId == audioSea) {
+            audioSea.currentTime = 0;
+            audioSea.play();
+        }
+    }
+}
 
 //---Calc--------------------------------------
 let numberPress = (number) => {
@@ -97,63 +132,99 @@ let clear = (id) => {
 }
 
 //---Event Click-------------------------------
+for(event of eventList) {
+    for (let number of numbersBtn) {
+        number.addEventListener(event, function (e) {
+            numberPress(e.target.textContent)
+            console.log('click');
+            return false;
+        });
+    }
 
-
-for (let number of numbersBtn) {
-    number.addEventListener('click',
-        (e) => numberPress(e.target.textContent));
+    for (let clearBtn of clearBtns) {
+        clearBtn.addEventListener(event,
+            (e) => clear(e.srcElement.id));
+    }
+    
+    btnSeetting.addEventListener(event, () => {
+        doc.querySelector('.panel-settings').classList.add('settings-active');
+    })
+    
+    btnStopAudio.addEventListener(event, () => {
+        btnStopAudio.classList.toggle('sound-off');
+        if (btnStopAudio.className == 'sound-on sound-off') {
+            audioOn = false;
+            audioSea.pause()
+        } else {
+            audioOn = true;
+            audioPlay(audioSea, audioOn);
+        };
+    })
+    
+    btnSettingOk.addEventListener(event, () => {
+        for (numberRadio of numbersRadio) {
+            if (numberRadio.checked) {
+                numberLevel = numberRadio.value;
+                break;
+            };
+        };
+    
+        for (operatorRadio of operatorsRadio) {
+            if (operatorRadio.checked) {
+                arrOperators = operatorRadio.value.split(' ');
+                break;
+            };
+        };
+        doc.querySelector('.panel-settings').classList.remove('settings-active');
+    })
+    
+    btnContinue.addEventListener(event, () => {
+        resultsWindow.classList.remove('window-active');
+        setTimeout(() => {
+            location.reload();
+        }, 1100)
+    })
+    
+    btnFullScren.addEventListener(event, (e) => {
+        if (!e.target.hasAttribute('full-scren'));
+    
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        } else {
+            document.documentElement.requestFullscreen();
+        }
+    }, false);
+    
+    btnPlay.addEventListener(event, () => {
+        addDrop(false);
+        timeId = setInterval(() => {
+            addDrop(false);
+        }, 5000);
+    
+        timeControler = setInterval(() => {
+            controller()
+        }, 100);
+    
+        timeIdBunus = setInterval(() => {
+            addDropBonus();
+        }, 16000)
+    
+        stopwatch = setInterval(() => {
+            tickTikc();
+        }, 1000)
+    
+        getBestScore();
+        audioPlay(audioSea, audioOn);
+    });
+    
+    enterBtn.addEventListener(event, () => {
+        comparisonOfDropAndInputValues();
+    })
 }
 
 window.addEventListener('keydown',
     (e) => KeyDownValue(e.keyCode));
 
-for (let clearBtn of clearBtns) {
-    clearBtn.addEventListener('click',
-        (e) => clear(e.srcElement.id));
-}
-
-btnSeetting.addEventListener('click', () => {
-    doc.querySelector('.panel-settings').classList.add('settings-active');
-})
-
-btnSettingOk.addEventListener('click', () => {
-    for (numberRadio of numbersRadio) {
-        if (numberRadio.checked) {
-            numberLevel = numberRadio.value;
-            break;
-        };
-    };
-
-    for (operatorRadio of operatorsRadio) {
-        if (operatorRadio.checked) {
-            arrOperators = operatorRadio.value.split(' ');
-            break;
-        };
-    };
-    doc.querySelector('.panel-settings').classList.remove('settings-active');
-})
-
-btnContinue.addEventListener('click', () => {
-    resultsWindow.classList.remove('window-active');
-    setTimeout(() => {
-        location.reload();
-    }, 1100)
-})
-
-btnStopAudio.addEventListener('click', () => {
-    audioPop.pause();
-    audioPopBonus.pause();
-    audioSplash.pause();
-    audioError.pause();
-    audioFallInSea.pause();
-    audioGameOver.pause();
-
-})
-
-
-
-
-//---Drop--------------------------------------
 
 //---Number generator--------------------------
 let GenerateNumber = function (min, max) {
@@ -179,7 +250,7 @@ let MoveDrop = function (id) {
     let dorp = doc.querySelector('.drop-' + id);
 
     dorp.style.top = dropContainer.clientHeight -
-    dropContainer.lastElementChild.clientHeight -
+        dropContainer.lastElementChild.clientHeight -
         dorp.clientHeight + 20 + 'px';
 }
 
@@ -191,13 +262,16 @@ let resultDrop = function (num1, operator, num2) {
 let addDrop = function (trueOrFalse) {
     let tempNumber;
     let drop = new Object();
-    // let randTimeBonus = GenerateNumber(1, 8);
+
+    drop.bonus = trueOrFalse;
+    drop.id = dropCounter;
+    drop.duration = 15000;
+    drop.time = Date.now();
     drop.operator = GenerateOperator();
     dropCounter++;
-    drop.id = dropCounter;
 
-    drop.num1 = GenerateNumber(1, numberLevel);
-    drop.num2 = GenerateNumber(1, numberLevel);
+    drop.num1 = GenerateNumber(1, 1);
+    drop.num2 = GenerateNumber(1, 1);
     if (drop.num1 < drop.num2) {
         tempNumber = drop.num1;
         drop.num1 = drop.num2;
@@ -211,9 +285,6 @@ let addDrop = function (trueOrFalse) {
 
 
     drop.result = resultDrop(drop.num1, drop.operator, drop.num2);
-    drop.bonus = trueOrFalse;
-    drop.duration = 10000;
-    drop.time = Date.now();
 
     dropContainer.insertAdjacentHTML('afterbegin',
         '<div class="drop drop-' + drop.id + '">' +
@@ -224,11 +295,10 @@ let addDrop = function (trueOrFalse) {
     );
 
     if (drop.bonus === true) {
-        drop.duration = 5000;
+        drop.duration = 10000;
         doc.querySelector('.drop').classList.add('drop-bonus');
     }
     arrDrops.push(drop);
-    console.log(drop);
     dropAappearance((drop.id));
     MoveDrop(drop.id);
 }
@@ -274,8 +344,7 @@ let controller = function () {
                 liveCounter++;
                 incorrectUnswer();
                 wave.style.height = wave.clientHeight + 20 + 'px';
-                audioFallInSea.currentTime = 0;
-                audioFallInSea.play();
+                audioPlay(audioFallInSea, audioOn);
                 RemoveDrop(dropIndex, dropId);
 
                 if (liveCounter >= 3) {
@@ -284,23 +353,22 @@ let controller = function () {
                     doc.querySelector('.live-' + liveCounter).classList.add('live-delete');
                 }
             } else {
-                audioFallInSea.currentTime = 0;
-                audioFallInSea.play();            
+                audioPlay(audioFallInSea, audioOn);
                 RemoveDrop(dropIndex, dropId);
             }
         };
-
     };
 
-    // if (fallCounter === 3) {
-    //     setBestScore();
-    //     dropResultsInTable();
-    //     clearInterval(stopwatch);
-    //     clearInterval(timeId);
-    //     clearInterval(timeIdBunus);
-    //     resultsWindow.classList.add('window-active');
-    //     audioGameOver.play();
-    // }
+    if (fallCounter === 3) {
+        setBestScore();
+        dropResultsInTable();
+        clearInterval(stopwatch);
+        clearInterval(timeId);
+        clearInterval(timeIdBunus);
+        clearInterval(timeControler);
+        resultsWindow.classList.add('window-active');
+        audioPlay(audioGameOver, audioOn);
+    }
 }
 
 let RemoveDrop = function (dropIndex, dropId) {
@@ -310,103 +378,100 @@ let RemoveDrop = function (dropIndex, dropId) {
 }
 
 //---Account increase function-----------------
-let incorrectUnswer = function (dropBinus) {
-    if (dropBinus !== true) {
-        score.textContent = Number(score.textContent) - 20;
-        scoreMines.classList.add('score-active');
-        setTimeout(function () {
-            scoreMines.classList.remove('score-active')
-        }, 1000);
-    } 
+let incorrectUnswer = function () {
+    score.textContent = Number(score.textContent) - 20;
+    scoreMines.classList.add('score-active');
+    setTimeout(() => {
+        scoreMines.classList.remove('score-active')
+    }, 1000);
 }
 
 //---Equation result comparison function-------
 let points = 10;
+let displayValue;
 let comparisonOfDropAndInputValues = function () {
+    let correct = false;
+    displayValue = display.value;
     scorePlus.textContent = '+' + points;
-
-    if (display.value === '') {
+    if (displayValue === '' || arrDrops == '') {
         return;
     } else {
         let dropIndex = -1;
         let dropId = 0;
-        let dropBonus;
-
-
+        let dropBonus = false;
         for (let i = 0; i < arrDrops.length; i++) {
-            if (arrDrops[i].result == display.value) {
+            if (arrDrops[i].result == displayValue) {
+                correct = true;
                 dropIndex = i;
                 dropId = arrDrops[i].id;
                 dropBonus = arrDrops[i].bonus;
-            } 
-
-            if (dropIndex !== -1) {
-                if (dropBonus !== true) {
+                if (dropBonus === false) {
+                    audioPlay(audioPop, audioOn);
                     score.textContent = Number(score.textContent) + points;
-                    splashDrop(dropId);
-                } else {
-                    splashDropBonus(dropId);
-                    score.textContent = Number(score.textContent) + 50;
-                    scorePlus.textContent = '+50';
+                    scorePlus.classList.add('score-active')
                     setTimeout(() => {
-                        dropContainer.innerHTML = '';
+                        scorePlus.classList.remove('score-active')
+                    }, 1000);
+                    splashDrop(dropId);
+                    arrDrops.splice(dropIndex, 1);
+
+                } else {
+                    audioPlay(audioPopBonus, audioOn);
+                    score.textContent = Number(score.textContent) + 50;
+                    scorePlus.classList.add('score-active')
+                    setTimeout(() => {
+                        scorePlus.classList.remove('score-active')
+                    }, 1000);
+                    splashDropBonus(dropId);
+                    setTimeout(() => {
+                        dropContainer.innerHTML = ''
                         arrDrops = [];
-                    }, 500)
-                }
-                scorePlus.classList.add('score-active');
-                setTimeout(function () {
-                    scorePlus.classList.remove('score-active')
-                }, 1000);
+                    }, 1000)
+                };
                 display.value = '';
-                audioPop.currentTime = 0;
-                audioSplash.currentTime = 0;
-                audioPop.play();
-                audioSplash.play();
-                
-                arrDrops.splice(dropIndex, 1);
+                audioPlay(audioSplash, audioOn)
                 points++;
                 dropsCorrect++;
-
-            } else { 
-                dropsWrong++;
-                incorrectUnswer();
-                display.value = '';
-                audioError.currentTime = 0;
-                audioError.play();
+                break;
             }
         };
 
-        //---Reducing the dropout time with correct answers
-        if (Number(score.textContent) >= 70) {
-            speedDrop = 3000;
-            clearInterval(timeId);
-            timeId = setInterval(function () {
-                addDrop(false);
-            }, speedDrop);
-
-        } else if (Number(score.textContent) >= 50) {
-            speedDrop = 5000;
-            clearInterval(timeId);
-            timeId = setInterval(function () {
-                addDrop(false);
-            }, speedDrop);
-
-        } else if (Number(score.textContent) >= 30) {
-            speedDrop = 8000;
-            clearInterval(timeId);
-            timeId = setInterval(function () {
-                addDrop(false);
-            }, speedDrop);
-            console.log('speed 2')
-
-        } else if (Number(score.textContent) < 30) {
-            speedDrop = 10000;
-            clearInterval(timeId);
-            timeId = setInterval(function () {
-                addDrop(false);
-            }, speedDrop);
-
+        if (correct === false) {
+            audioPlay(audioError, audioOn);
+            incorrectUnswer();
+            display.value = '';
+            dropsWrong++;
         };
+
+        //---Reducing the dropout time with correct answers
+        // if (Number(score.textContent) >= 70) {
+        //     speedDrop = 3000;
+        //     clearInterval(timeId);
+        //     timeId = setInterval(() => {
+        //         addDrop(false);
+        //     }, speedDrop);
+
+        // } else if (Number(score.textContent) >= 50) {
+        //     speedDrop = 5000;
+        //     clearInterval(timeId);
+        //     timeId = setInterval(() => {
+        //         addDrop(false);
+        //     }, speedDrop);
+
+        // } else if (Number(score.textContent) >= 30) {
+        //     speedDrop = 8000;
+        //     clearInterval(timeId);
+        //     timeId = setInterval(() => {
+        //         addDrop(false);
+        //     }, speedDrop);
+
+        // } else if (Number(score.textContent) < 30) {
+        //     speedDrop = 10000;
+        //     clearInterval(timeId);
+        //     timeId = setInterval(() => {
+        //         addDrop(false);
+        //     }, speedDrop);
+        // };
     };
 }
 
@@ -414,7 +479,7 @@ let comparisonOfDropAndInputValues = function () {
 let splashDrop = function (dropId) {
     let drop = doc.querySelector('.drop-' + dropId);
     drop.classList.add('drop-splash');
-    setTimeout(function () {
+    setTimeout(() => {
         drop.remove();
     }, 1000)
 }
@@ -422,7 +487,7 @@ let splashDrop = function (dropId) {
 let splashDropBonus = function (dropId) {
     let drop = doc.querySelector('.drop-' + dropId);
     drop.classList.add('drop-splash-bonus');
-    setTimeout(function () {
+    setTimeout(() => {
         drop.remove();
     }, 1000)
 
@@ -458,41 +523,6 @@ let dropResultsInTable = function () {
 }
 
 
-btnPlay.addEventListener('click', () => {
-    dropCounter = 0;
-    dropsCorrect = 0;
-    dropsWrong = 0;
-    setTimeout(() => {
-        addDrop(false);
-        setInterval(() => {
-            controller()
-        }, 100);
-
-        timeId = setInterval(() => {
-            addDrop(false);
-        }, 10000);
-    }, 1000);
-
-    setTimeout(() => {
-        addDropBonus;
-        timeIdBunus = setInterval(() => {
-            addDropBonus();
-        }, 16000)
-    }, 17000)
-
-    stopwatch = setInterval(() => {
-        tickTikc();
-    }, 1000)
-
-    getBestScore();
-
-});
-
-enterBtn.addEventListener('click', () => {
-    setTimeout(() => {
-        comparisonOfDropAndInputValues();
-    }, 100);
-})
 
 document.addEventListener("DOMContentLoaded", function () {
 
