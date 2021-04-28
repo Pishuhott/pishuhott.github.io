@@ -1,32 +1,120 @@
 let doc = document;
+let numbersBtn = doc.querySelectorAll('.btn-number');
+let clearBtns = doc.querySelectorAll('.btn-clear');
+let enterBtn = doc.querySelector('.btn-enter');
 let display = doc.querySelector('.display');
-let dropContainer = doc.querySelector('.game-drop-container');
+let dropContainer = document.querySelector('.game-drop-container');
+let btnSeetting = doc.querySelector('.settings');
+let btnSettingOk = doc.querySelector('.setting-ok');
+let btnPlay = doc.querySelector('.play');
+let howToPlay = doc.querySelector('.howToPlay');
 let score = doc.querySelector('.score');
+let bestScore = doc.querySelector('.best-score');
 let scorePlus = doc.getElementById('score-10');
+let scoreMines = doc.getElementById('score-20');
 let resultsWindow = doc.querySelector('.results-window');
+let btnContinue = doc.querySelector('.btn-continue');
+let dropLive = doc.querySelectorAll('.lives');
+let operatorsRadio = doc.getElementsByName('operator-radio');
+let numbersRadio = doc.getElementsByName('numbers-radio');
+let btnStopAudio = doc.querySelector('.sound-on');
+let btnFullScren = doc.querySelector('.full-scren');
+let btnNext = doc.getElementById('next');
+let btnBack = doc.getElementById('back');
+let sliders = doc.querySelector('.sliders');
+let slidersText = doc.querySelector('.sliders__text');
+let offset = 0;
+let audioOn = true;
 let arrDrops = [];
 let dropsBonus = [];
-let dropCounter = 0; 
+let dropCounter = 0;
 let dropsCorrect = 0;
 let dropsWrong = 0;
-let arrOperators = ['-', '+'];
+let arrOperators = ['-', '+', '*', '/'];
 let tempArrOpreators = [];
 let numberLevel = 10;
+let numberLevel1 = 1;
+let numberLevel2 = numberLevel;
 let tempNumberLevel = 10;
 let speedDrop = 10000;
 let resyltDrop;
+let timeControler;
 let timeId;
 let timeIdBunus;
+let stopwatch;
 let dropBonus;
+let min = 0;
+let sec = 0;
+let eventList = ['click', 'touchend'];
 
 
 
+//---Calc--------------------------------------
+let numberPress = (number) => {
+
+    if (display.value == '') {
+        display.value = number;
+    } else {
+        display.value += number;
+    };
+};
+
+//---Entering data into the display------------
 
 
+//---Clearing Display--------------------------
+
+//---Event Click-------------------------------
+for (event of eventList) {
+
+    enterBtn.addEventListener(event, () => {
+        comparisonOfDropAndInputValues();
+    })
 
 
+    btnNext.addEventListener(event, () => {
+        offset += slidersText.clientWidth;
+        if (offset < (slidersText.clientWidth * 3)) {
+            sliders.style.left = -offset +'px';
+        } else {
+            offset = (slidersText.clientWidth * 2);
+        };
 
+        if ( offset == (slidersText.clientWidth * 2)) {
+            btnNext.classList.add('inactive'); 
+        };
+        btnBack.classList.remove('inactive'); 
+    })
 
+    btnBack.addEventListener(event, () => {
+        offset -= slidersText.clientWidth;
+        if (offset >= 0) {
+            sliders.style.left = -offset +'px';            
+        } else {
+            offset = 0;
+        };
+
+        if (offset == 0) {
+            btnBack.classList.add('inactive'); 
+        };
+        btnNext.classList.remove('inactive');
+    })
+
+    btnPlay.addEventListener(event, () => {
+        addDrop(false);
+        timeId = setInterval(() => {
+            addDrop(false);
+        }, 5000);
+
+        timeControler = setInterval(() => {
+            controller()
+        }, 100);
+
+        timeIdBunus = setInterval(() => {
+            addDropBonus();
+        }, 16000)
+    });
+}
 
 //---Number generator--------------------------
 let GenerateNumber = function (min, max) {
@@ -52,7 +140,7 @@ let MoveDrop = function (id) {
     let dorp = doc.querySelector('.drop-' + id);
 
     dorp.style.top = dropContainer.clientHeight -
-    dropContainer.lastElementChild.clientHeight -
+        dropContainer.lastElementChild.clientHeight -
         dorp.clientHeight + 20 + 'px';
 }
 
@@ -62,15 +150,18 @@ let resultDrop = function (num1, operator, num2) {
 
 //---Adding a drop with variables--------------
 let addDrop = function (trueOrFalse) {
+    dropCounter++;
     let tempNumber;
     let drop = new Object();
-    // let randTimeBonus = GenerateNumber(1, 8);
-    drop.operator = GenerateOperator();
-    dropCounter++;
-    drop.id = dropCounter;
 
-    drop.num1 = GenerateNumber(1, numberLevel);
-    drop.num2 = GenerateNumber(1, numberLevel);
+    drop.bonus = trueOrFalse;
+    drop.id = dropCounter;
+    drop.duration = 10000;
+    drop.time = Date.now();
+    drop.operator = GenerateOperator();
+    drop.num1 = GenerateNumber(numberLevel1, numberLevel2);
+    drop.num2 = GenerateNumber(numberLevel1, numberLevel2);
+
     if (drop.num1 < drop.num2) {
         tempNumber = drop.num1;
         drop.num1 = drop.num2;
@@ -84,9 +175,6 @@ let addDrop = function (trueOrFalse) {
 
 
     drop.result = resultDrop(drop.num1, drop.operator, drop.num2);
-    drop.bonus = trueOrFalse;
-    drop.duration = 10000;
-    drop.time = Date.now();
 
     dropContainer.insertAdjacentHTML('afterbegin',
         '<div class="drop drop-' + drop.id + '">' +
@@ -99,9 +187,8 @@ let addDrop = function (trueOrFalse) {
     if (drop.bonus === true) {
         drop.duration = 5000;
         doc.querySelector('.drop').classList.add('drop-bonus');
-    }
+    };
     arrDrops.push(drop);
-    console.log(drop);
     dropAappearance((drop.id));
     MoveDrop(drop.id);
 }
@@ -125,39 +212,27 @@ let controller = function () {
         if (arrDrops[i].time + arrDrops[i].duration < Date.now()) {
             dropIndex = i;
             dropId = arrDrops[i].id;
-            dropsWrong++;
             if (arrDrops[i].bonus === false) {
-                fallCounter++;
-                liveCounter++;
-                incorrectUnswer();
                 wave.style.height = wave.clientHeight + 20 + 'px';
-                audioFallInSea.currentTime = 0;
-                audioFallInSea.play();
+                incorrectUnswer();
                 RemoveDrop(dropIndex, dropId);
 
-                if (liveCounter >= 3) {
-                    break;
-                } else {
-                    doc.querySelector('.live-' + liveCounter).classList.add('live-delete');
-                }
+                fallCounter++;
+
+                
             } else {
-                audioFallInSea.currentTime = 0;
-                audioFallInSea.play();            
                 RemoveDrop(dropIndex, dropId);
-            }
+            };
         };
-
     };
 
-    // if (fallCounter === 3) {
-    //     setBestScore();
-    //     dropResultsInTable();
-    //     clearInterval(stopwatch);
-    //     clearInterval(timeId);
-    //     clearInterval(timeIdBunus);
-    //     resultsWindow.classList.add('window-active');
-    //     audioGameOver.play();
-    // }
+    if (fallCounter === 3) {
+        clearInterval(stopwatch);
+        clearInterval(timeId);
+        clearInterval(timeIdBunus);
+        clearInterval(timeControler);
+        resultsWindow.classList.add('window-active');
+    };
 }
 
 let RemoveDrop = function (dropIndex, dropId) {
@@ -167,103 +242,74 @@ let RemoveDrop = function (dropIndex, dropId) {
 }
 
 //---Account increase function-----------------
-let incorrectUnswer = function (dropBinus) {
-    if (dropBinus !== true) {
-        score.textContent = Number(score.textContent) - 20;
-        scoreMines.classList.add('score-active');
-        setTimeout(function () {
-            scoreMines.classList.remove('score-active')
-        }, 1000);
-    } 
+let incorrectUnswer = function () {
+    score.textContent = Number(score.textContent) - 20;
+    scoreMines.classList.add('score-active');
+    setTimeout(() => {
+        scoreMines.classList.remove('score-active')
+    }, 1000);
+    dropsWrong++;
 }
 
 //---Equation result comparison function-------
 let points = 10;
+let displayValue;
 let comparisonOfDropAndInputValues = function () {
+    let correct = false;
+    displayValue = display.value;
     scorePlus.textContent = '+' + points;
 
-    if (display.value === '') {
+    if (displayValue === '' || arrDrops == '') {
         return;
     } else {
         let dropIndex = -1;
         let dropId = 0;
-        let dropBonus;
-
-
+        let dropBonus = false;
         for (let i = 0; i < arrDrops.length; i++) {
-            if (arrDrops[i].result == display.value) {
+            if (arrDrops[i].result == displayValue) {
+                correct = true;
                 dropIndex = i;
                 dropId = arrDrops[i].id;
                 dropBonus = arrDrops[i].bonus;
-            } 
 
-            if (dropIndex !== -1) {
-                if (dropBonus !== true) {
+                if (dropBonus === false) {
                     score.textContent = Number(score.textContent) + points;
-                    splashDrop(dropId);
-                } else {
-                    splashDropBonus(dropId);
-                    score.textContent = Number(score.textContent) + 50;
-                    scorePlus.textContent = '+50';
+                    scorePlus.classList.add('score-active')
                     setTimeout(() => {
-                        dropContainer.innerHTML = '';
+                        scorePlus.classList.remove('score-active')
+                    }, 1000);
+                    splashDrop(dropId);
+                    audioPlay(audioPop, audioOn);
+                    arrDrops.splice(dropIndex, 1);
+
+                } else {
+                    score.textContent = Number(score.textContent) + 50;
+                    scorePlus.classList.add('score-active')
+                    setTimeout(() => {
+                        scorePlus.classList.remove('score-active')
+                    }, 1000);
+                    splashDropBonus(dropId);
+                    setTimeout(() => {
+                        dropContainer.innerHTML = ''
                         arrDrops = [];
-                    }, 500)
-                }
-                scorePlus.classList.add('score-active');
-                setTimeout(function () {
-                    scorePlus.classList.remove('score-active')
-                }, 1000);
+                    }, 1000)
+                    audioPlay(audioPopBonus, audioOn);
+                };
+
                 display.value = '';
-                audioPop.currentTime = 0;
-                audioSplash.currentTime = 0;
-                audioPop.play();
-                audioSplash.play();
-                
-                arrDrops.splice(dropIndex, 1);
+                audioPlay(audioSplash, audioOn)
                 points++;
                 dropsCorrect++;
-
-            } else { 
-                dropsWrong++;
-                incorrectUnswer();
-                display.value = '';
-                audioError.currentTime = 0;
-                audioError.play();
+                break;
             }
         };
 
-        //---Reducing the dropout time with correct answers
-        if (Number(score.textContent) >= 70) {
-            speedDrop = 3000;
-            clearInterval(timeId);
-            timeId = setInterval(function () {
-                addDrop(false);
-            }, speedDrop);
-
-        } else if (Number(score.textContent) >= 50) {
-            speedDrop = 5000;
-            clearInterval(timeId);
-            timeId = setInterval(function () {
-                addDrop(false);
-            }, speedDrop);
-
-        } else if (Number(score.textContent) >= 30) {
-            speedDrop = 8000;
-            clearInterval(timeId);
-            timeId = setInterval(function () {
-                addDrop(false);
-            }, speedDrop);
-            console.log('speed 2')
-
-        } else if (Number(score.textContent) < 30) {
-            speedDrop = 10000;
-            clearInterval(timeId);
-            timeId = setInterval(function () {
-                addDrop(false);
-            }, speedDrop);
-
-        };
+        if (correct === false) {
+            display.value = '';
+            incorrectUnswer();
+            audioPlay(audioError, audioOn);
+            dropsWrong++;
+        };        
     };
 }
 
@@ -271,7 +317,7 @@ let comparisonOfDropAndInputValues = function () {
 let splashDrop = function (dropId) {
     let drop = doc.querySelector('.drop-' + dropId);
     drop.classList.add('drop-splash');
-    setTimeout(function () {
+    setTimeout(() => {
         drop.remove();
     }, 1000)
 }
@@ -279,51 +325,9 @@ let splashDrop = function (dropId) {
 let splashDropBonus = function (dropId) {
     let drop = doc.querySelector('.drop-' + dropId);
     drop.classList.add('drop-splash-bonus');
-    setTimeout(function () {
+    setTimeout(() => {
         drop.remove();
     }, 1000)
 
 }
 
-//---stopwatch function------------------------
-
-
-btnPlay.addEventListener('click', () => {
-    dropCounter = 0;
-    dropsCorrect = 0;
-    dropsWrong = 0;
-    setTimeout(() => {
-        addDrop(false);
-        setInterval(() => {
-            controller()
-        }, 100);
-
-        timeId = setInterval(() => {
-            addDrop(false);
-        }, 10000);
-    }, 1000);
-
-    setTimeout(() => {
-        addDropBonus;
-        timeIdBunus = setInterval(() => {
-            addDropBonus();
-        }, 16000)
-    }, 17000)
-
-    stopwatch = setInterval(() => {
-        tickTikc();
-    }, 1000)
-
-    getBestScore();
-
-});
-
-enterBtn.addEventListener('click', () => {
-    setTimeout(() => {
-        comparisonOfDropAndInputValues();
-    }, 100);
-})
-
-document.addEventListener("DOMContentLoaded", function () {
-
-});

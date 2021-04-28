@@ -5,14 +5,13 @@ let enterBtn = doc.querySelector('.btn-enter');
 let display = doc.querySelector('.display');
 let dropContainer = document.querySelector('.game-drop-container');
 let btnSeetting = doc.querySelector('.settings');
-let btnSeettingClosed = doc.querySelectorAll('.setting-closed');
 let btnSettingOk = doc.querySelector('.setting-ok');
-let btnSettingCancel = doc.querySelector('.setting-cancel');
 let btnPlay = doc.querySelector('.play');
+let btnHowToPlay = doc.querySelector('.howToPlay');
 let score = doc.querySelector('.score');
 let bestScore = doc.querySelector('.best-score');
 let scorePlus = doc.getElementById('score-10');
-let scoreMines = doc.getElementById('score-30');
+let scoreMines = doc.getElementById('score-20');
 let resultsWindow = doc.querySelector('.results-window');
 let btnContinue = doc.querySelector('.btn-continue');
 let dropLive = doc.querySelectorAll('.lives');
@@ -33,9 +32,11 @@ let dropsBonus = [];
 let dropCounter = 0;
 let dropsCorrect = 0;
 let dropsWrong = 0;
-let arrOperators = ['-', '+'];
+let arrOperators = ['-', '+', '*', '/'];
 let tempArrOpreators = [];
 let numberLevel = 10;
+let numberLevel1 = 1;
+let numberLevel2 = numberLevel;
 let tempNumberLevel = 10;
 let speedDrop = 10000;
 let resyltDrop;
@@ -55,9 +56,6 @@ audioSplash.src = './../sounds/splash-drop.mp3';
 audioError.src = './../sounds/error.mp3';
 audioFallInSea.src = './../sounds/fall-in-sea.mp3';
 audioGameOver.src = './../sounds/game-over.mp3';
-
-
-
 
 let audioPlay = function (audioId, audioOn) {
     if (audioOn === true) {
@@ -132,11 +130,10 @@ let clear = (id) => {
 }
 
 //---Event Click-------------------------------
-for(event of eventList) {
+for (event of eventList) {
     for (let number of numbersBtn) {
         number.addEventListener(event, function (e) {
             numberPress(e.target.textContent)
-            console.log('click');
             return false;
         });
     }
@@ -145,11 +142,15 @@ for(event of eventList) {
         clearBtn.addEventListener(event,
             (e) => clear(e.srcElement.id));
     }
-    
+
+    enterBtn.addEventListener(event, () => {
+        comparisonOfDropAndInputValues();
+    })
+
     btnSeetting.addEventListener(event, () => {
         doc.querySelector('.panel-settings').classList.add('settings-active');
     })
-    
+
     btnStopAudio.addEventListener(event, () => {
         btnStopAudio.classList.toggle('sound-off');
         if (btnStopAudio.className == 'sound-on sound-off') {
@@ -160,7 +161,7 @@ for(event of eventList) {
             audioPlay(audioSea, audioOn);
         };
     })
-    
+
     btnSettingOk.addEventListener(event, () => {
         for (numberRadio of numbersRadio) {
             if (numberRadio.checked) {
@@ -168,7 +169,7 @@ for(event of eventList) {
                 break;
             };
         };
-    
+
         for (operatorRadio of operatorsRadio) {
             if (operatorRadio.checked) {
                 arrOperators = operatorRadio.value.split(' ');
@@ -177,48 +178,48 @@ for(event of eventList) {
         };
         doc.querySelector('.panel-settings').classList.remove('settings-active');
     })
-    
+
     btnContinue.addEventListener(event, () => {
         resultsWindow.classList.remove('window-active');
         setTimeout(() => {
             location.reload();
         }, 1100)
     })
-    
+
     btnFullScren.addEventListener(event, (e) => {
         if (!e.target.hasAttribute('full-scren'));
-    
+
         if (document.fullscreenElement) {
             document.exitFullscreen();
         } else {
             document.documentElement.requestFullscreen();
         }
     }, false);
-    
+
     btnPlay.addEventListener(event, () => {
         addDrop(false);
         timeId = setInterval(() => {
             addDrop(false);
         }, 5000);
-    
+
         timeControler = setInterval(() => {
             controller()
         }, 100);
-    
+
         timeIdBunus = setInterval(() => {
             addDropBonus();
         }, 16000)
-    
+
         stopwatch = setInterval(() => {
             tickTikc();
         }, 1000)
-    
+
         getBestScore();
         audioPlay(audioSea, audioOn);
     });
-    
-    enterBtn.addEventListener(event, () => {
-        comparisonOfDropAndInputValues();
+
+    btnHowToPlay.addEventListener('click', () => {
+        document.location.href = './../scr/tutorial.html';
     })
 }
 
@@ -260,18 +261,18 @@ let resultDrop = function (num1, operator, num2) {
 
 //---Adding a drop with variables--------------
 let addDrop = function (trueOrFalse) {
+    dropCounter++;
     let tempNumber;
     let drop = new Object();
 
     drop.bonus = trueOrFalse;
     drop.id = dropCounter;
-    drop.duration = 15000;
+    drop.duration = 10000;
     drop.time = Date.now();
     drop.operator = GenerateOperator();
-    dropCounter++;
+    drop.num1 = GenerateNumber(numberLevel1, numberLevel2);
+    drop.num2 = GenerateNumber(numberLevel1, numberLevel2);
 
-    drop.num1 = GenerateNumber(1, 1);
-    drop.num2 = GenerateNumber(1, 1);
     if (drop.num1 < drop.num2) {
         tempNumber = drop.num1;
         drop.num1 = drop.num2;
@@ -295,9 +296,9 @@ let addDrop = function (trueOrFalse) {
     );
 
     if (drop.bonus === true) {
-        drop.duration = 10000;
+        drop.duration = 5000;
         doc.querySelector('.drop').classList.add('drop-bonus');
-    }
+    };
     arrDrops.push(drop);
     dropAappearance((drop.id));
     MoveDrop(drop.id);
@@ -338,24 +339,23 @@ let controller = function () {
         if (arrDrops[i].time + arrDrops[i].duration < Date.now()) {
             dropIndex = i;
             dropId = arrDrops[i].id;
-            dropsWrong++;
             if (arrDrops[i].bonus === false) {
-                fallCounter++;
-                liveCounter++;
-                incorrectUnswer();
                 wave.style.height = wave.clientHeight + 20 + 'px';
+                incorrectUnswer();
                 audioPlay(audioFallInSea, audioOn);
                 RemoveDrop(dropIndex, dropId);
+                liveCounter++;
+                fallCounter++;
 
                 if (liveCounter >= 3) {
                     break;
                 } else {
                     doc.querySelector('.live-' + liveCounter).classList.add('live-delete');
-                }
+                };
             } else {
                 audioPlay(audioFallInSea, audioOn);
                 RemoveDrop(dropIndex, dropId);
-            }
+            };
         };
     };
 
@@ -368,7 +368,7 @@ let controller = function () {
         clearInterval(timeControler);
         resultsWindow.classList.add('window-active');
         audioPlay(audioGameOver, audioOn);
-    }
+    };
 }
 
 let RemoveDrop = function (dropIndex, dropId) {
@@ -384,6 +384,7 @@ let incorrectUnswer = function () {
     setTimeout(() => {
         scoreMines.classList.remove('score-active')
     }, 1000);
+    dropsWrong++;
 }
 
 //---Equation result comparison function-------
@@ -393,6 +394,7 @@ let comparisonOfDropAndInputValues = function () {
     let correct = false;
     displayValue = display.value;
     scorePlus.textContent = '+' + points;
+
     if (displayValue === '' || arrDrops == '') {
         return;
     } else {
@@ -405,18 +407,18 @@ let comparisonOfDropAndInputValues = function () {
                 dropIndex = i;
                 dropId = arrDrops[i].id;
                 dropBonus = arrDrops[i].bonus;
+
                 if (dropBonus === false) {
-                    audioPlay(audioPop, audioOn);
                     score.textContent = Number(score.textContent) + points;
                     scorePlus.classList.add('score-active')
                     setTimeout(() => {
                         scorePlus.classList.remove('score-active')
                     }, 1000);
                     splashDrop(dropId);
+                    audioPlay(audioPop, audioOn);
                     arrDrops.splice(dropIndex, 1);
 
                 } else {
-                    audioPlay(audioPopBonus, audioOn);
                     score.textContent = Number(score.textContent) + 50;
                     scorePlus.classList.add('score-active')
                     setTimeout(() => {
@@ -427,7 +429,9 @@ let comparisonOfDropAndInputValues = function () {
                         dropContainer.innerHTML = ''
                         arrDrops = [];
                     }, 1000)
+                    audioPlay(audioPopBonus, audioOn);
                 };
+
                 display.value = '';
                 audioPlay(audioSplash, audioOn)
                 points++;
@@ -437,41 +441,75 @@ let comparisonOfDropAndInputValues = function () {
         };
 
         if (correct === false) {
-            audioPlay(audioError, audioOn);
-            incorrectUnswer();
             display.value = '';
+            incorrectUnswer();
+            audioPlay(audioError, audioOn);
             dropsWrong++;
         };
 
         //---Reducing the dropout time with correct answers
-        // if (Number(score.textContent) >= 70) {
-        //     speedDrop = 3000;
-        //     clearInterval(timeId);
-        //     timeId = setInterval(() => {
-        //         addDrop(false);
-        //     }, speedDrop);
+        if (Number(score.textContent) >= 250) {
+            speedDrop = 3000;
+            clearInterval(timeId);
+            timeId = setInterval(() => {
+                addDrop(false);
+            }, speedDrop);
+            if (numberLevel == 10 && numberLevel < 20) {
+                numberLevel2 = 19;
+            } else if (numberLevel == 20 && numberLevel < 40) {
+                numberLevel2 = 29;
+            } else {
+                numberLevel2 = 60;
+            };
+            numberLevel1 = 9;
 
-        // } else if (Number(score.textContent) >= 50) {
-        //     speedDrop = 5000;
-        //     clearInterval(timeId);
-        //     timeId = setInterval(() => {
-        //         addDrop(false);
-        //     }, speedDrop);
+        } else if (Number(score.textContent) >= 100) {
+            speedDrop = 5000;
+            clearInterval(timeId);
+            timeId = setInterval(() => {
+                addDrop(false);
+            }, speedDrop);
 
-        // } else if (Number(score.textContent) >= 30) {
-        //     speedDrop = 8000;
-        //     clearInterval(timeId);
-        //     timeId = setInterval(() => {
-        //         addDrop(false);
-        //     }, speedDrop);
+            if (numberLevel == 10 && numberLevel < 20) {
+                numberLevel2 = 15;
+            } else if (numberLevel == 20 && numberLevel < 40) {
+                numberLevel2 = 25;
+            } else {
+                numberLevel2 = 50;
+            };
+            numberLevel1 = 5;
 
-        // } else if (Number(score.textContent) < 30) {
-        //     speedDrop = 10000;
-        //     clearInterval(timeId);
-        //     timeId = setInterval(() => {
-        //         addDrop(false);
-        //     }, speedDrop);
-        // };
+        } else if (Number(score.textContent) >= 60) {
+            speedDrop = 8000;
+            clearInterval(timeId);
+            timeId = setInterval(() => {
+                addDrop(false);
+            }, speedDrop);
+
+            if (numberLevel == 10 && numberLevel < 40) {
+                numberLevel2 = 13;
+            } else if (numberLevel == 20 && numberLevel < 40) {
+                numberLevel2 = 23;
+            } else {
+                numberLevel2 = 45;
+            };
+            numberLevel1 = 3;
+
+        } else if (Number(score.textContent) < 30) {
+            speedDrop = 10000;
+            clearInterval(timeId);
+            timeId = setInterval(() => {
+                addDrop(false);
+            }, speedDrop);
+            if (numberLevel == 10 && numberLevel < 20) {
+                numberLevel2 = 10;
+            } else if (numberLevel == 20 && numberLevel < 40) {
+                numberLevel2 = 20;
+            } else {
+                numberLevel2 = 40;
+            };
+            numberLevel1 = 1;
+        };
     };
 }
 
@@ -521,9 +559,3 @@ let dropResultsInTable = function () {
     doc.querySelector('.result-drops-correct').textContent = dropsCorrect;
     doc.querySelector('.result-drops-wrong').textContent = dropsWrong;
 }
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-
-});

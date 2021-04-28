@@ -12,49 +12,82 @@
 </head>
 
 <body>
-    <div id="wraperr" class="wrapper">
-        <div class="game-field">
-            <div class="results-window">
-                <h2>GAME OVER</h2>
-            </div>
-    
-            <div class="game-drop-container"></div>
-            <div class="wave">
-                <div class="water"></div>
-                <div class="water water-2"></div>
-            </div>
+    <div class="wrapper">
+        <h3>Instructions</h3>
 
-        </div>
-
-        <div class="panel-game">
-            <div class="panel__score">
-                <p>Score: <span class="score">0</span>
-                    <span id="score-10">+10</span>
-                </p>
-            </div>
-
-            <div class="panel__calc">
-
-                <input class="display" type="text" maxlength="5" value="" disabled>
-                <div class="panel__buttons">
-                    <button data-key="103" class="btn-number btn">7</button>
-                    <button data-key="104" class="btn-number btn">8</button>
-                    <button data-key="105" class="btn-number btn">9</button>
-                    <button data-key="46" class="btn-clear btn" id="clear">Clear</button>
-                    <button data-key="100" class="btn-number btn">4</button>
-                    <button data-key="101" class="btn-number btn">5</button>
-                    <button data-key="102" class="btn-number btn">6</button>
-                    <button data-key="97" class="btn-number btn">1</button>
-                    <button data-key="98" class="btn-number btn">2</button>
-                    <button data-key="99" class="btn-number btn">3</button>
-                    <button data-key="13" class="btn-enter btn" id="enter">Enter</button>
-                    <button data-key="96" class="btn-number btn">0</button>
-                    <button data-key="8" class="btn-clear btn" id="delete">Delete</button>
+            <div class="game__contener">
+                <div class="results-window">
+                    <h2>GAME OVER</h2>
                 </div>
-            </div>
-        </div>
 
+                <div class="game-field">
+                    <div class="game-drop-container">
+                        <div class="drop drop-test">
+                            <span class="drop__numbers number-1">1</span>
+                            <br>
+                            <span class="drop__operator">-</span>
+                            <br>
+                            <span class="drop__numbers number-2">1</span>
+                        </div>
+                    </div>
+                    <div class="wave">
+                        <div class="water"></div>
+                        <div class="water water-2"></div>
+                    </div>
+
+                </div>
+
+                <div class="panel-game">
+                    <div class="panel__score">
+                        <p>Score: <span class="score">0</span>
+                            <span id="score-10">+10</span>
+                            <span id="score-20">-20</span>
+                        </p>
+                    </div>
+
+                    <div class="panel__calc">
+                        <input class="display" type="text" maxlength="5" value="" disabled>
+                        <div class="panel__buttons">
+                            <button data-key="103" class="btn-number btn">7</button>
+                            <button data-key="104" class="btn-number btn">8</button>
+                            <button data-key="105" class="btn-number btn">9</button>
+                            <button data-key="46" class="btn-clear btn" id="clear">Clear</button>
+                            <button data-key="100" class="btn-number btn">4</button>
+                            <button data-key="101" class="btn-number btn">5</button>
+                            <button data-key="102" class="btn-number btn">6</button>
+                            <button data-key="97" class="btn-number btn">1</button>
+                            <button data-key="98" class="btn-number btn">2</button>
+                            <button data-key="99" class="btn-number btn">3</button>
+                            <button data-key="13" class="btn-enter btn" id="enter">Enter</button>
+                            <button data-key="96" class="btn-number btn">0</button>
+                            <button data-key="8" class="btn-clear btn" id="delete">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="instructions-container">
+                <div class="sliders">
+                    <div class="sliders__text">
+                        <p></p>
+                    </div>
+                    <div class="sliders__text">
+                        <p></p>
+                    </div>
+                    <div class="sliders__text">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="instructions__buttons">
+                    <button id="back" class="instructions--button inactive">Back</button>
+                    <button id="next" class="instructions--button">Next</button>
+                  </div>
+            </div>
+
+        <button class="play">Play</button>
     </div>
+
     <script src="./js/tutorial.js"></script>
 </body>
 
