@@ -7,7 +7,7 @@
 }
 
 h2 {
-    font-size: 10rem;
+    font-size: 8rem;
     font-weight: 800;
     text-transform: uppercase;
     -webkit-background-clip: text;
@@ -57,6 +57,7 @@ button:focus {
     overflow: hidden;
     user-select: none;
 }
+
 .instructions-container {
     display: block;
     position: relative;
@@ -66,7 +67,7 @@ button:focus {
     height: 70%;
     background-color: rgba(255, 255, 255, 0.597);
     border: 5px solid #ffffff;
-    border-radius: 20px; 
+    border-radius: 20px;
     overflow: hidden;
     user-select: none;
 }
@@ -85,7 +86,6 @@ button:focus {
     padding: 1.7rem;
     position: absolute;
     top: 0;
-
 }
 
 .sliders__text:nth-child(1) {
@@ -110,8 +110,6 @@ button:focus {
     top: 87%;
     width: 100%;
 }
-
-
 
 .instructions--button {
     margin: 0 .7rem;
@@ -146,7 +144,6 @@ button:focus {
     transition: all 1s ease;
     background: radial-gradient(#c5ddf1, #94b6d1);
     z-index: 5;
-
 }
 
 .window-active {
@@ -168,9 +165,9 @@ button:focus {
     position: absolute;
     display: inline-block;
     background: url(../../img/drop.svg) no-repeat center;
-    background-size: 65%;
-    width: 120px;
-    height: 170px;
+    background-size: 87%;
+    width: 85px;
+    height: 115px;
     text-align: center;
     top: 0;
     transition: top 10s linear;
@@ -178,7 +175,7 @@ button:focus {
 
 .drop-bonus {
     background: url(../../img/bonus-drop.svg) no-repeat center;
-    background-size: 65%;
+    background-size: 90%;
     transition: top 5s linear;
 }
 
@@ -216,13 +213,13 @@ button:focus {
 }
 
 .drop .number-1 {
-    top: 35%;
-    left: 45%;
+    top: 30%;
+    left: 40%;
 }
 
 .drop-bonus .number-1 {
-    top: 35%;
-    left: 45%;
+    top: 30%;
+    left: 40%;
 }
 
 .drop__operator {
@@ -231,13 +228,13 @@ button:focus {
 }
 
 .drop .number-2 {
-    top: 55%;
-    left: 45%;
+    top: 60%;
+    left: 40%;
 }
 
 .drop-bonus .number-2 {
-    top: 55%;
-    left: 45%;
+    top: 60%;
+    left: 40%;
 }
 
 .wave {
@@ -302,7 +299,7 @@ button:focus {
     border-bottom-left-radius: 60px;
     border-bottom-right-radius: 60px;
     align-items: center;
-	justify-self: center;
+    justify-self: center;
 }
 
 .panel__score p {
@@ -315,18 +312,18 @@ button:focus {
     font-weight: bold;
     color: crimson;
 }
+
 #score-10, #score-20 {
     font-size: 5rem;
     position: absolute;
-    top: 190px;
-    left: 90px;
+    top: 160%;
+    left: 30%;
     opacity: 0;
 }
 
 #score-10 {
     color: rgb(20, 220, 30);
 }
-
 
 .score-active {
     animation: score-active 1s linear;
@@ -375,6 +372,10 @@ button:focus {
     grid-template-rows: repeat(4, 25%);
 }
 
+.panel__buttons button {
+    cursor: default;
+}
+
 .panel__buttons button:nth-child(4) {
     grid-column: 4 / 4;
     grid-row: 1 / 3;
@@ -398,12 +399,8 @@ button:focus {
     font-size: 3rem;
 }
 
-.btn-enter, .btn-clear{
+.btn-enter, .btn-clear {
     font-size: 1.5rem;
-}
-
-.panel__buttons button:active {
-    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .panel__buttons__tols {
@@ -432,7 +429,7 @@ button:focus {
 .play {
     position: absolute;
     top: 90%;
-    left: 82%;
+    left: 80%;
     padding: 5px 10px;
     font-family: 'Fredoka One', cursive;
     font-size: 2.5rem;
@@ -440,10 +437,146 @@ button:focus {
     background: #e54444;
     border: 4px solid #b03131;
     border-radius: 10px;
-
 }
 
 .play:active, .howToPlay:active {
     transform: scale(0.95);
 }
 
+@media (max-width: 770px) {
+    h3 {
+        font-size: 3rem;
+        top: 1%;
+    }
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    .drop, .drop-bonus {
+        background-size: 87%;
+        width: 55px;
+        height: 78px;
+    }
+    .drop-bonus {
+        background-size: 90%;
+        transition: top 5s linear;
+    }
+    .drop span, .drop-bonus span {
+        font-size: 2rem;
+    }
+    .wave {
+        height: 20%;
+    }
+    .game__contener {
+        top: 2%;
+        left: 5%;
+        width: 90%;
+        height: 50%;
+        grid-template-columns: 1fr 160px;
+    }
+    .panel__score {
+        height: 40%;
+        padding: 0;
+    }
+    .panel__score p {
+        font-size: 2rem;
+    }
+    .panel__score span {
+        font-size: 2.2rem;
+    }
+    #score-10, #score-20 {
+        font-size: 2.5rem;
+        top: 160%;
+        left: 30%;
+    }
+    .panel-game {
+        display: grid;
+        grid-template-rows: 80px 1fr;
+    }
+    .panel__calc {
+        margin: auto;
+        width: 90%;
+        height: 60%;
+        align-items: center;
+        justify-self: center;
+    }
+    .btn-number {
+        font-size: 1.5rem;
+    }
+    .btn-enter, .btn-clear {
+        font-size: .8rem;
+    }
+    .display {
+        width: 100%;
+        height: 50px;
+        font-size: 5rem;
+    }
+    .instructions-container {
+        top: 4%;
+        left: 5%;
+        width: 90%;
+        height: 30%;
+    }
+    .sliders {
+        height: 73%;
+        position: relative;
+        top: 0;
+        left: 0;
+        transition: all 1s ease;
+    }
+    .instructions__buttons {
+        top: 81%;
+    }
+    .play {
+        top: 92%;
+        left: 45%;
+    }
+}
+
+@media (max-width: 420px) {
+    h2 {
+        font-size: 4.2rem;
+    }
+    h3 {
+        left: 2%;
+    }
+    .game__contener {
+        left: 2%;
+        width: 96%;
+        height: 60%;
+        grid-template-columns: none;
+        grid-template-rows: 45% 55%;
+    }
+    .panel-game {
+        display: grid;
+        grid-template-rows: 40px 1fr;
+    }
+    .panel__score {
+        height: 100%;
+    }
+    #score-10, #score-20 {
+        font-size: 2.5rem;
+        top: -135%;
+        left: 40%;
+    }
+    .panel__calc {
+        width: 50%;
+        height: 95%;
+    }
+    .btn-enter, .btn-clear {
+        font-size: 1.2rem;
+    }
+    .instructions-container {
+        left: 2%;
+        width: 96%;
+        height: 23%;
+    }
+    .instructions__buttons {
+        top: 77%;
+    }
+    .play {
+        top: 94%;
+        left: 42%;
+        font-size: 2rem;
+    }
+}

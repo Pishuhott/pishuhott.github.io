@@ -200,15 +200,17 @@ for (event of eventList) {
         addDrop(false);
         timeId = setInterval(() => {
             addDrop(false);
-        }, 5000);
+        }, 10000);
+        setTimeout(() => {
+            timeIdBunus = setInterval(() => {
+                addDropBonus();
+            }, 20000)
+        }, 15000)
 
         timeControler = setInterval(() => {
             controller()
         }, 100);
 
-        timeIdBunus = setInterval(() => {
-            addDropBonus();
-        }, 16000)
 
         stopwatch = setInterval(() => {
             tickTikc();
@@ -296,7 +298,7 @@ let addDrop = function (trueOrFalse) {
     );
 
     if (drop.bonus === true) {
-        drop.duration = 5000;
+        drop.duration = 6000;
         doc.querySelector('.drop').classList.add('drop-bonus');
     };
     arrDrops.push(drop);
@@ -368,6 +370,7 @@ let controller = function () {
         clearInterval(timeControler);
         resultsWindow.classList.add('window-active');
         audioPlay(audioGameOver, audioOn);
+        audioPlay(audioSea, false);
     };
 }
 
@@ -420,6 +423,7 @@ let comparisonOfDropAndInputValues = function () {
 
                 } else {
                     score.textContent = Number(score.textContent) + 50;
+                    scorePlus.textContent = '+50';
                     scorePlus.classList.add('score-active')
                     setTimeout(() => {
                         scorePlus.classList.remove('score-active')
@@ -448,7 +452,7 @@ let comparisonOfDropAndInputValues = function () {
         };
 
         //---Reducing the dropout time with correct answers
-        if (Number(score.textContent) >= 250) {
+        if (Number(score.textContent) >= 300) {
             speedDrop = 3000;
             clearInterval(timeId);
             timeId = setInterval(() => {
@@ -463,7 +467,7 @@ let comparisonOfDropAndInputValues = function () {
             };
             numberLevel1 = 9;
 
-        } else if (Number(score.textContent) >= 100) {
+        } else if (Number(score.textContent) >= 160) {
             speedDrop = 5000;
             clearInterval(timeId);
             timeId = setInterval(() => {
@@ -479,7 +483,7 @@ let comparisonOfDropAndInputValues = function () {
             };
             numberLevel1 = 5;
 
-        } else if (Number(score.textContent) >= 60) {
+        } else if (Number(score.textContent) >= 80) {
             speedDrop = 8000;
             clearInterval(timeId);
             timeId = setInterval(() => {

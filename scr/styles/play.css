@@ -282,6 +282,7 @@ button:focus {
     top: 190px;
     left: 90px;
     opacity: 0;
+    z-index: 8;
 }
 
 #score-10 {
@@ -592,7 +593,7 @@ label {
         height: 300px;
     }
     .display {
-        font-size: 3.5rem;
+        font-size: 3rem;
         height: 80px;
     }
     

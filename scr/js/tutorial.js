@@ -1,53 +1,29 @@
 let doc = document;
-let numbersBtn = doc.querySelectorAll('.btn-number');
-let clearBtns = doc.querySelectorAll('.btn-clear');
 let enterBtn = doc.querySelector('.btn-enter');
+let btnNumbers = doc.querySelectorAll('.btn-number');
 let display = doc.querySelector('.display');
 let dropContainer = document.querySelector('.game-drop-container');
-let btnSeetting = doc.querySelector('.settings');
-let btnSettingOk = doc.querySelector('.setting-ok');
 let btnPlay = doc.querySelector('.play');
-let howToPlay = doc.querySelector('.howToPlay');
 let score = doc.querySelector('.score');
-let bestScore = doc.querySelector('.best-score');
 let scorePlus = doc.getElementById('score-10');
 let scoreMines = doc.getElementById('score-20');
 let resultsWindow = doc.querySelector('.results-window');
-let btnContinue = doc.querySelector('.btn-continue');
-let dropLive = doc.querySelectorAll('.lives');
-let operatorsRadio = doc.getElementsByName('operator-radio');
-let numbersRadio = doc.getElementsByName('numbers-radio');
-let btnStopAudio = doc.querySelector('.sound-on');
-let btnFullScren = doc.querySelector('.full-scren');
 let btnNext = doc.getElementById('next');
 let btnBack = doc.getElementById('back');
 let sliders = doc.querySelector('.sliders');
 let slidersText = doc.querySelector('.sliders__text');
 let offset = 0;
-let audioOn = true;
 let arrDrops = [];
-let dropsBonus = [];
 let dropCounter = 0;
-let dropsCorrect = 0;
-let dropsWrong = 0;
-let arrOperators = ['-', '+', '*', '/'];
-let tempArrOpreators = [];
-let numberLevel = 10;
-let numberLevel1 = 1;
-let numberLevel2 = numberLevel;
-let tempNumberLevel = 10;
-let speedDrop = 10000;
-let resyltDrop;
+let arrOperators = ['+', '-', '*', '/'];
 let timeControler;
 let timeId;
 let timeIdBunus;
-let stopwatch;
-let dropBonus;
-let min = 0;
-let sec = 0;
 let eventList = ['click', 'touchend'];
-
-
+let demo1;
+let demoImitation1;
+let demo2;
+let demo3;
 
 //---Calc--------------------------------------
 let numberPress = (number) => {
@@ -59,60 +35,55 @@ let numberPress = (number) => {
     };
 };
 
-//---Entering data into the display------------
-
-
-//---Clearing Display--------------------------
-
 //---Event Click-------------------------------
 for (event of eventList) {
-
     enterBtn.addEventListener(event, () => {
         comparisonOfDropAndInputValues();
     })
 
-
     btnNext.addEventListener(event, () => {
         offset += slidersText.clientWidth;
         if (offset < (slidersText.clientWidth * 3)) {
-            sliders.style.left = -offset +'px';
+            sliders.style.left = -offset + 'px';
         } else {
             offset = (slidersText.clientWidth * 2);
         };
 
-        if ( offset == (slidersText.clientWidth * 2)) {
-            btnNext.classList.add('inactive'); 
+        if (offset == (slidersText.clientWidth * 2)) {
+            btnNext.classList.add('inactive');
         };
-        btnBack.classList.remove('inactive'); 
+        btnBack.classList.remove('inactive');
     })
 
     btnBack.addEventListener(event, () => {
         offset -= slidersText.clientWidth;
         if (offset >= 0) {
-            sliders.style.left = -offset +'px';            
+            sliders.style.left = -offset + 'px';
         } else {
             offset = 0;
         };
 
         if (offset == 0) {
-            btnBack.classList.add('inactive'); 
+            btnBack.classList.add('inactive');
         };
         btnNext.classList.remove('inactive');
     })
 
     btnPlay.addEventListener(event, () => {
-        addDrop(false);
-        timeId = setInterval(() => {
-            addDrop(false);
-        }, 5000);
+        let i = 0;
+        setTimeout(() => {
+            demoOne(i);
+        }, 1000)
 
-        timeControler = setInterval(() => {
-            controller()
-        }, 100);
+        setTimeout(() => {
+            demoTwo(i);
+        }, 13000)
 
-        timeIdBunus = setInterval(() => {
-            addDropBonus();
-        }, 16000)
+        setTimeout(() => {
+            demoThree(i);
+        }, 20000)
+        
+
     });
 }
 
@@ -123,7 +94,7 @@ let GenerateNumber = function (min, max) {
 //---Operator generator------------------------
 let GenerateOperator = function () {
     let rand = Math.floor(Math.random() * arrOperators.length);
-    return arrOperators[rand]; // возвращаешь оператор
+    return arrOperators[rand];
 }
 //--The appearance of a drop in a random place-
 let dropAappearance = function (id) {
@@ -138,7 +109,6 @@ let dropAappearance = function (id) {
 
 let MoveDrop = function (id) {
     let dorp = doc.querySelector('.drop-' + id);
-
     dorp.style.top = dropContainer.clientHeight -
         dropContainer.lastElementChild.clientHeight -
         dorp.clientHeight + 20 + 'px';
@@ -159,8 +129,8 @@ let addDrop = function (trueOrFalse) {
     drop.duration = 10000;
     drop.time = Date.now();
     drop.operator = GenerateOperator();
-    drop.num1 = GenerateNumber(numberLevel1, numberLevel2);
-    drop.num2 = GenerateNumber(numberLevel1, numberLevel2);
+    drop.num1 = GenerateNumber(1, 10);
+    drop.num2 = GenerateNumber(1, 10);
 
     if (drop.num1 < drop.num2) {
         tempNumber = drop.num1;
@@ -173,9 +143,7 @@ let addDrop = function (trueOrFalse) {
         drop.num1 = drop.num2 * drop.result;
     };
 
-
-    drop.result = resultDrop(drop.num1, drop.operator, drop.num2);
-
+    drop.result = resultDrop(drop.num1, drop.operator, drop.num2)
     dropContainer.insertAdjacentHTML('afterbegin',
         '<div class="drop drop-' + drop.id + '">' +
         '<span class="drop__numbers number-1">' + drop.num1 + '</span><br>' +
@@ -189,7 +157,7 @@ let addDrop = function (trueOrFalse) {
         doc.querySelector('.drop').classList.add('drop-bonus');
     };
     arrDrops.push(drop);
-    dropAappearance((drop.id));
+    dropAappearance(drop.id);
     MoveDrop(drop.id);
 }
 
@@ -201,8 +169,6 @@ let addDropBonus = function () {
 
 //---Game controller---------------------------
 let fallCounter = 0;
-let liveCounter = 0;
-
 let controller = function () {
     let dropIndex = -1;
     let dropId = 0;
@@ -216,10 +182,7 @@ let controller = function () {
                 wave.style.height = wave.clientHeight + 20 + 'px';
                 incorrectUnswer();
                 RemoveDrop(dropIndex, dropId);
-
                 fallCounter++;
-
-                
             } else {
                 RemoveDrop(dropIndex, dropId);
             };
@@ -227,7 +190,6 @@ let controller = function () {
     };
 
     if (fallCounter === 3) {
-        clearInterval(stopwatch);
         clearInterval(timeId);
         clearInterval(timeIdBunus);
         clearInterval(timeControler);
@@ -238,7 +200,6 @@ let controller = function () {
 let RemoveDrop = function (dropIndex, dropId) {
     arrDrops.splice(dropIndex, 1);
     doc.querySelector('.drop-' + dropId).remove();
-
 }
 
 //---Account increase function-----------------
@@ -248,68 +209,54 @@ let incorrectUnswer = function () {
     setTimeout(() => {
         scoreMines.classList.remove('score-active')
     }, 1000);
-    dropsWrong++;
 }
 
 //---Equation result comparison function-------
-let points = 10;
 let displayValue;
 let comparisonOfDropAndInputValues = function () {
     let correct = false;
     displayValue = display.value;
-    scorePlus.textContent = '+' + points;
 
-    if (displayValue === '' || arrDrops == '') {
-        return;
-    } else {
-        let dropIndex = -1;
-        let dropId = 0;
-        let dropBonus = false;
-        for (let i = 0; i < arrDrops.length; i++) {
-            if (arrDrops[i].result == displayValue) {
-                correct = true;
-                dropIndex = i;
-                dropId = arrDrops[i].id;
-                dropBonus = arrDrops[i].bonus;
+    let dropIndex = -1;
+    let dropId = 0;
+    let dropBonus = false;
+    for (let i = 0; i < arrDrops.length; i++) {
+        if (arrDrops[i].result == displayValue) {
+            correct = true;
+            dropIndex = i;
+            dropId = arrDrops[i].id;
+            dropBonus = arrDrops[i].bonus;
 
-                if (dropBonus === false) {
-                    score.textContent = Number(score.textContent) + points;
-                    scorePlus.classList.add('score-active')
-                    setTimeout(() => {
-                        scorePlus.classList.remove('score-active')
-                    }, 1000);
-                    splashDrop(dropId);
-                    audioPlay(audioPop, audioOn);
-                    arrDrops.splice(dropIndex, 1);
+            if (dropBonus === false) {
+                score.textContent = Number(score.textContent) + 10;
+                scorePlus.classList.add('score-active')
+                setTimeout(() => {
+                    scorePlus.classList.remove('score-active')
+                }, 1000);
+                splashDrop(dropId);
+                arrDrops.splice(dropIndex, 1);
 
-                } else {
-                    score.textContent = Number(score.textContent) + 50;
-                    scorePlus.classList.add('score-active')
-                    setTimeout(() => {
-                        scorePlus.classList.remove('score-active')
-                    }, 1000);
-                    splashDropBonus(dropId);
-                    setTimeout(() => {
-                        dropContainer.innerHTML = ''
-                        arrDrops = [];
-                    }, 1000)
-                    audioPlay(audioPopBonus, audioOn);
-                };
+            } else {
+                score.textContent = Number(score.textContent) + 50;
+                scorePlus.classList.add('score-active')
+                setTimeout(() => {
+                    scorePlus.classList.remove('score-active')
+                }, 1000);
+                splashDropBonus(dropId);
+                setTimeout(() => {
+                    dropContainer.innerHTML = ''
+                    arrDrops = [];
+                }, 1000)
+            };
 
-                display.value = '';
-                audioPlay(audioSplash, audioOn)
-                points++;
-                dropsCorrect++;
-                break;
-            }
-        };
+            display.value = '';
+            break;
+        }
 
         if (correct === false) {
             display.value = '';
             incorrectUnswer();
-            audioPlay(audioError, audioOn);
-            dropsWrong++;
-        };        
+        };
     };
 }
 
@@ -331,3 +278,92 @@ let splashDropBonus = function (dropId) {
 
 }
 
+let demoOne = function(drop) {
+    addDrop(false);    
+    demo1 = setInterval(() => {
+        drop++
+        addDrop(false);
+        if (drop >= 2) {
+            clearInterval(demo1);
+        }
+    }, 3000);
+
+    demoImitation1 = setInterval(() => {
+        imitationSolution();
+        if (drop >= 2) {
+            clearInterval(demoImitation1);
+        }
+        console.log(i)
+    }, 2500)
+}
+
+let demoTwo = function(drop) {
+    let dropId = 0;
+    let ccc = true;
+    addDrop(false);    
+    demo2 = setInterval(() => {
+        drop++
+        addDrop(false);
+        if (drop >= 4) {
+            clearInterval(demo2);
+        }
+    }, 1500);
+
+    setTimeout(() => {
+        addDropBonus();
+    }, 7000)
+
+    setTimeout(() => {
+
+        for (let i = 0; i < arrDrops.length; i++) {
+            if (arrDrops[i].bonus === true) {
+                dropId = arrDrops[i].id;
+                display.value = arrDrops[i].result
+                scorePlus.textContent = '+50'
+                score.textContent = + 50;
+                scorePlus.classList.add('score-active')
+                setTimeout(() => {
+                    scorePlus.classList.remove('score-active')
+                }, 1000);
+                splashDropBonus(dropId);
+                setTimeout(() => {
+                    dropContainer.innerHTML = ''
+                    arrDrops = [];
+                }, 1000)
+            }
+            display.value = '';
+        }        
+
+
+    }, 8000)
+}
+
+let demoThree = function (drop) {
+    demo1 = setInterval(() => {
+        drop++
+        addDrop(false);
+        if (drop >= 4) {
+            clearInterval(demo1);
+        }
+    }, 2000);
+
+    timeControler = setInterval(() => {
+        controller();
+    }, 100)
+}
+
+let imitationSolution = function () {
+    for (let i = 0; i < arrDrops.length; i++) {
+        display.value = arrDrops[i].result;
+    }
+    setTimeout(() => {
+        comparisonOfDropAndInputValues();
+    }, 1000)
+}
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    
+});
