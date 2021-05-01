@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&amp;display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="./styles/play.css">
+    <script src="./js/play.js"></script>
     <title>Raindrops</title>
 </head>
 
@@ -37,24 +38,21 @@
         </div>
 
         <div class="game-field">
+            <div class="poins__contener">
+                <span id="score-10">+10</span>
+                <span id="score-20">-20</span>
+            </div>
             <div class="game-drop-container">
-                <div class="drop drop-1"><span
-                        class="drop__numbers number-1">1</span><br><span class="drop__operator">-</span><br><span
-                        class="drop__numbers number-2">1</span></div>
             </div>
             <div class="wave">
                 <div class="water"></div>
                 <div class="water water-2"></div>
             </div>
-
         </div>
 
         <div class="panel-game">
             <div class="panel__score">
-                <p>Score: <span class="score">0</span>
-                    <span id="score-10">+10</span>
-                    <span id="score-20">-20</span>
-                </p>
+                <p>Score: <span class="score">0</span></p>
                 <p class="best-score-elements">Best score: <span class="best-score">0</span></p>
             </div>
 
@@ -93,20 +91,27 @@
         </div>
 
         <div class="panel-settings">
-            <h3>fdfdffdfdf</h3>
+            <div>
+                <h3>Equation difficulty selection settings</h3>
+                <p>
+                    Choose the type of equations you want to solve,
+                    you can also choose the range of numbers in the equation.
+                </p>
+            </div>
             <div class="settings-checkbox">
                 <div class="checkbox-operators checkboxs">
                     <h3>Equation type</h3>
                     <label>
-                        <input type="radio" name="operator-radio" value="+ -" checked><br>
+                        <input class="radio-btn" type="radio" name="operator-radio" id="pm" value="+ -" checked><br>
                         Addition and subtraction
                     </label>
                     <label>
-                        <input type="radio" name="operator-radio" value="* /"><br>
+                        <input class="radio-btn" type="radio" name="operator-radio" id="md" value="* /"><br>
                         Multiplication and division
                     </label>
                     <label>
-                        <input type="radio" name="operator-radio" value="+ - * /" checked><br>
+                        <input class="radio-btn" type="radio" name="operator-radio" id="allOpr" value="+ - * /"
+                            checked><br>
                         All operations
                     </label>
                 </div>
@@ -114,15 +119,16 @@
                 <div class="checkbox-numbers checkboxs">
                     <h3>Range of numbers</h3>
                     <label>
-                        <input type="radio" value="10" name="numbers-radio" checked><br>
+                        <input class="radio-btn" type="radio" value="10" name="numbers-radio" id="numbers10"
+                            checked><br>
                         1-10
                     </label>
                     <label>
-                        <input type="radio" value="20" name="numbers-radio"><br>
+                        <input class="radio-btn" type="radio" value="20" name="numbers-radio" id="numbers20"><br>
                         1-20
                     </label>
                     <label>
-                        <input type="radio" value="40" name="numbers-radio"><br>
+                        <input class="radio-btn" type="radio" value="40" name="numbers-radio" id="numbers30"><br>
                         1-40
                     </label>
                 </div>
@@ -130,10 +136,11 @@
 
             <div class="setting-buttons">
                 <button class="setting-ok">✔</button>
+                <button class="setting-cencel">🗙</button>
             </div>
         </div>
     </div>
-    <script src="./js/play.js"></script>
+
 </body>
 
 </html>

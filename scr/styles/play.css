@@ -122,6 +122,27 @@ button:focus {
     position: relative;
 }
 
+.poins__contener {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+}
+
+#score-10, #score-20 {
+    font-size: 10rem;
+    font-weight: bold;
+    color: crimson;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 8;
+}
+
+#score-10 {
+    color: rgb(20, 220, 30);
+}
+
 .game-drop-container {
     width: 100%;
     height: 100%;
@@ -250,9 +271,15 @@ button:focus {
     text-align: center;
 }
 
+.panel-settings p {
+    margin: 10px auto;
+    width: 90%;
+    font-size: 1.8rem;
+}
+
 .panel-game {
     display: grid;
-    grid-template-rows: 1fr 1fr 3fr 2fr;
+    grid-template-rows: 15% 20% 50% 15%;
 }
 
 .panel__score {
@@ -263,7 +290,7 @@ button:focus {
     border-bottom-left-radius: 60px;
     border-bottom-right-radius: 60px;
     align-items: center;
-	justify-self: center;
+    justify-self: center;
 }
 
 .panel__score p {
@@ -276,19 +303,6 @@ button:focus {
     font-weight: bold;
     color: crimson;
 }
-#score-10, #score-20 {
-    font-size: 5rem;
-    position: absolute;
-    top: 190px;
-    left: 90px;
-    opacity: 0;
-    z-index: 8;
-}
-
-#score-10 {
-    color: rgb(20, 220, 30);
-}
-
 
 .score-active {
     animation: score-active 1s linear;
@@ -307,7 +321,7 @@ button:focus {
 }
 
 .panel__lives {
-    margin:  auto;
+    margin: auto;
     margin-top: 20px;
     width: 60%;
     display: grid;
@@ -344,7 +358,7 @@ button:focus {
 
 .panel__calc {
     width: 80%;
-    height: 360px;
+    height: 80%;
     margin: auto;
     padding: 10px;
     background-color: rgb(231, 223, 194);
@@ -354,7 +368,7 @@ button:focus {
 
 .display {
     width: 100%;
-    height: 100px;
+    height: 28%;
     text-align: center;
     font-size: 5rem;
     border: none;
@@ -396,7 +410,7 @@ button:focus {
     font-size: 3.5rem;
 }
 
-.btn-enter, .btn-clear{
+.btn-enter, .btn-clear {
     font-size: 1.8rem;
 }
 
@@ -476,9 +490,11 @@ button:focus {
 .sound-on:active, .settings:active, .full-scren:active {
     transform: scale(0.95);
 }
+
 .sound-off {
     color: black;
 }
+
 .panel-settings {
     position: absolute;
     width: 310px;
@@ -539,11 +555,15 @@ label {
     margin-bottom: 35px;
 }
 
+.setting-buttons {
+    width: 50%;
+    height: 35%;
+}
+
 .setting-buttons button {
-    width: 60px;
-    height: 60px;
-    margin: 0 10px;
-    padding: 5px 10px;
+    margin: 0 .7rem;
+    width: 40%;
+    height: 100%;
     font-family: 'Fredoka One', cursive;
     font-size: 2.5rem;
     border-radius: 10px;
@@ -559,7 +579,7 @@ label {
     border: 4px solid #009644;
 }
 
-.setting-cancel:hover {
+.setting-cencel:hover {
     background: #ff0000;
     border: 4px solid #c30000;
     color: white;
@@ -569,73 +589,83 @@ label {
     transform: scale(0.95);
 }
 
-@media (max-width: 768px){
+@media (max-width: 768px) {
     .wrapper {
         grid-template-columns: 1fr 200px;
     }
-
     .panel__score p {
         font-size: 2rem;
     }
-
     .panel__score span {
         font-size: 2.2rem;
         font-weight: bold;
         color: crimson;
     }
-
+    .poins__contener {
+        left: 35%;
+    }
     #score-10, #score-20 {
-        font-size: 2.5rem;
-        left: 60px;
+        font-size: 8rem;
+    }
+    .panel-game {
+        grid-template-rows: 10% 20% 50% 20%;
     }
     .panel__calc {
-        width: 90%;
-        height: 300px;
+        height: 50%;
     }
     .display {
         font-size: 3rem;
-        height: 80px;
     }
-    
     .btn-number {
         font-size: 2.2rem;
     }
-    
-    .btn-enter, .btn-clear{
+    .btn-enter, .btn-clear {
         font-size: 1.2rem;
     }
-
     .panel__buttons__tols {
         width: 90%;
     }
-
     .tols__howToPlay, .play {
         font-size: 1.5rem;
     }
-
+    .full-scren {
+        display: none;
+    }
+    .panel__buttons__tols button:nth-child(4) {
+        grid-column: 2 / 4;
+    }
     .panel-settings {
         width: 200px;
-        grid-template-rows: 2fr 3fr 1fr;
+        display: flex;
+        width: 200px;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: space-evenly;
     }
-
-    .panel-settings h3{
+    .panel-settings h3 {
         font-size: 2rem;
     }
-
+    .panel-settings p {
+        margin: 10px auto;
+        font-size: 1.3rem;
+    }
     .settings-checkbox {
         grid-template-columns: none;
         grid-template-rows: 1fr 1fr;
-        height: 90%;
+        height: 70%;
     }
-
     input[type=radio] {
         width: 15px;
         height: 15px;
         margin-right: 10px;
     }
-
     label {
         font-size: 1.5rem;
+    }
+    .setting-buttons {
+        width: 75%;
+        height: 5%;
     }
 }
 
@@ -644,9 +674,8 @@ label {
         grid-template-columns: none;
         grid-template-rows: 40% 60%;
     }
-
     .results-window h2 {
-       font-size: 5rem;
+        font-size: 5rem;
     }
     .results-window p {
         font-size: 2rem;
@@ -654,54 +683,47 @@ label {
     .results-window span {
         font-size: 2.5rem;
     }
-    
     .results-drops, .player-account {
         width: 70%;
     }
-
+    #score-10, #score-20 {
+        font-size: 5rem;
+    }
     .wave {
         height: 20%;
-      }
-
+    }
     .drop, .drop-bonus {
         width: 50px;
         height: 71px;
         background-size: 100%;
     }
-
     .drop span, .drop-bonus span {
         font-size: 2rem;
     }
-    
     .drop .number-1 {
         top: 25%;
         left: 40%;
     }
-
     .drop .number-2 {
         left: 40%;
     }
-
     .drop__operator {
         top: 40%;
         left: 15%;
     }
-
     .panel-game {
-        grid-template-rows: 55px 40px 280px 2fr;
+        grid-template-rows: 8% 8% 65% 25%;
     }
-    .best-score-elements{
+    .panel__score {
+        padding: 0;
+    }
+    .best-score-elements {
         display: none;
     }
-    #score-10, #score-20 {
-        top: 50px;
-    }
-
     .panel__lives {
         margin: 5px auto;
         width: auto;
     }
-
     .panel__lives p {
         font-size: 2rem;
     }
@@ -709,34 +731,40 @@ label {
         min-width: 20px;
         min-height: 30px;
     }
-
     .panel__calc {
         margin: 10px auto;
-        width: 95%;
-        height: 260px;
+        width: 60%;
+        height: 95%;
     }
     .display {
-        font-size: 3rem;
-        height: 70px;
+        font-size: 4rem;
     }
-
-    .btn-enter, .btn-clear{
-        font-size: 1.6rem;
+    .btn-enter, .btn-clear {
+        font-size: 1.2rem;
     }
-
+    .panel__buttons__tols {
+        margin-top: 8px;
+        width: 75%;
+        height: 70%;
+        grid-template-rows: repeat(2, 45%);
+        grid-gap: 5px;
+    }
     .panel__buttons__tols button {
-        width: 90%;
-        height: 90%;
-        font-size: 1.8rem;
+        margin: 0 auto;
+        width: 100%;
+        height: 100%;
+        font-size: 1.5rem;
     }
-
     .panel-settings {
         width: 100%;
         height: 100%;
         right: -100%;
     }
-
     .settings-active {
         right: 0;
+    }
+    .setting-buttons {
+        width: 50%;
+        height: 7%;
     }
 }

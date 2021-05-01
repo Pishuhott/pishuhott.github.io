@@ -88,6 +88,15 @@ button:focus {
     top: 0;
 }
 
+.sliders__text p {
+    font-size: 2rem;
+}
+
+.bold-word {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
 .sliders__text:nth-child(1) {
     right: 0;
 }
@@ -107,7 +116,7 @@ button:focus {
     left: 0;
     right: 0;
     text-align: center;
-    top: 87%;
+    top: 92%;
     width: 100%;
 }
 
@@ -161,6 +170,26 @@ button:focus {
     height: 100%;
 }
 
+.points__contener {
+    position: absolute;
+    top: 40%;
+    left: 30%;
+}
+
+#score-10, #score-20 {
+    font-size: 5rem;
+    font-weight: bold;
+    color: crimson;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+#score-10 {
+    color: rgb(20, 220, 30);
+}
+
 .drop, .drop-bonus {
     position: absolute;
     display: inline-block;
@@ -170,7 +199,7 @@ button:focus {
     height: 115px;
     text-align: center;
     top: 0;
-    transition: top 10s linear;
+    transition: top 11s linear;
 }
 
 .drop-bonus {
@@ -313,18 +342,6 @@ button:focus {
     color: crimson;
 }
 
-#score-10, #score-20 {
-    font-size: 5rem;
-    position: absolute;
-    top: 160%;
-    left: 30%;
-    opacity: 0;
-}
-
-#score-10 {
-    color: rgb(20, 220, 30);
-}
-
 .score-active {
     animation: score-active 1s linear;
 }
@@ -343,7 +360,7 @@ button:focus {
 
 .panel__calc {
     width: 80%;
-    height: 360px;
+    height: 70%;
     margin: auto;
     padding: 10px;
     background-color: rgb(231, 223, 194);
@@ -353,7 +370,7 @@ button:focus {
 
 .display {
     width: 100%;
-    height: 100px;
+    height: 29%;
     text-align: center;
     font-size: 5rem;
     border: none;
@@ -439,6 +456,11 @@ button:focus {
     border-radius: 10px;
 }
 
+.gaps {
+    width: 100%;
+    height: 16%;
+}
+
 .play:active, .howToPlay:active {
     transform: scale(0.95);
 }
@@ -508,14 +530,20 @@ button:focus {
     }
     .display {
         width: 100%;
-        height: 50px;
+        height: 32%;
         font-size: 5rem;
     }
     .instructions-container {
         top: 4%;
         left: 5%;
         width: 90%;
-        height: 30%;
+        height: 33%;
+    }
+    .sliders__text p {
+        font-size: 1.7rem;
+    }
+    .bold-word {
+        font-size: 1.7rem;
     }
     .sliders {
         height: 73%;
@@ -549,33 +577,43 @@ button:focus {
     }
     .panel-game {
         display: grid;
-        grid-template-rows: 40px 1fr;
+        grid-template-rows: 15% 85%;
     }
     .panel__score {
         height: 100%;
     }
     #score-10, #score-20 {
         font-size: 2.5rem;
-        top: -135%;
-        left: 40%;
+        top: 0;
+        left: 15%;
     }
     .panel__calc {
-        width: 50%;
+        margin: 1% auto;
+        width: 40%;
         height: 95%;
     }
+    .display {
+        font-size: 3rem;
+    }
     .btn-enter, .btn-clear {
-        font-size: 1.2rem;
+        font-size: .9em;
     }
     .instructions-container {
         left: 2%;
         width: 96%;
-        height: 23%;
+        height: 45%;
+    }
+    .sliders__text p {
+        font-size: 1.3rem;
+    }
+    .bold-word {
+        font-size: 1.3rem;
     }
     .instructions__buttons {
-        top: 77%;
+        top: 85%;
     }
     .play {
-        top: 94%;
+        top: 92%;
         left: 42%;
         font-size: 2rem;
     }

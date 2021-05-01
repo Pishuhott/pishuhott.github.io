@@ -21,7 +21,7 @@ h3 {
     font-size: 2.5rem;
     color: #5b96be;
     user-select: none;
-    text-align: center 
+    text-align: center
 }
 
 .intro-window {
@@ -118,27 +118,21 @@ button:active {
 
 @media (min-width: 320px) {
     h2 {
-
         font-size: 5rem;
     }
-    
     h3 {
         font-size: 2rem;
         margin: 0 10px;
     }
-
     .intro-drops {
         min-width: 320px;
     }
-
     .drop-left {
         left: 10%;
     }
-    
     .drop-center {
         left: 15%;
     }
-    
     .drop-rigth {
         right: 10%;
     }
@@ -148,7 +142,6 @@ button:active {
     h2 {
         font-size: 10rem;
     }
-    
     h3 {
         font-size: 2.5rem;
     }
@@ -156,19 +149,15 @@ button:active {
         min-width: 768px;
         text-align: center;
     }
-    
     .intro-drops {
         min-width: 768px;
     }
-     
     .drop-left {
         left: 20%;
     }
-    
     .drop-center {
         left: 35%;
     }
-    
     .drop-rigth {
         right: 20%;
     }
