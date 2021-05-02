@@ -240,7 +240,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         if (key.id === 'clear' || key.id === 'delete' || key.id === 'enter') {
-            display.value == display.value;
+            display.value = display.value;
         } else {
             if (display.value == '') {
                 display.value = key.textContent;

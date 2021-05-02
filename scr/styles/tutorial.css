@@ -614,7 +614,7 @@ button:focus {
         top: 85%;
     }
     .play {
-        top: 92%;
+        bottom: 2%;
         left: 42%;
         font-size: 2rem;
     }
