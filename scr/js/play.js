@@ -59,11 +59,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //---Receiving and transmitting radio buttons 
     //---from the local data storage
-    let getRadioValue = function () {
+    let getlocalStorageValue = function () {
+        btnStopAudio.classList.add(`sound-${localStorage.getItem('sound-status')}`);
+        checkingValueRadioBtn();
         numberLevel = localStorage.getItem('RadioBtnNumber');
         arrOperators = localStorage.getItem('RadioBtnOperator').split(' ');
     }
 
+    let checkingValueRadioBtn = function () {
+        for (numberRadio of numbersRadio) {
+            if (numberRadio.checked) {
+                localStorage.setItem('RadioBtnNumber', numberRadio.value);
+                setDataRadioBtn(numberRadio);
+                break;
+            };
+        };
+
+        for (operatorRadio of operatorsRadio) {
+            if (operatorRadio.checked) {
+                localStorage.setItem('RadioBtnOperator', operatorRadio.value);
+                setDataRadioBtn(operatorRadio)
+                break;
+            };
+        };
+    }
     let setDataRadioBtn = function (elem) {
         localStorage.setItem(elem.getAttribute('name'), elem.getAttribute('id'));
     }
@@ -101,10 +120,13 @@ document.addEventListener("DOMContentLoaded", function () {
             if (btnStopAudio.className == 'sound-on sound-off') {
                 audioOn = false;
                 audioSea.pause()
+                localStorage.setItem('sound-status', 'off')
             } else {
                 audioOn = true;
                 audioPlay(audioSea, audioOn);
+                localStorage.setItem('sound-status', 'on')
             };
+
         })
 
         btnSeetting.addEventListener(event, () => {
@@ -112,22 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
 
         btnSettingOk.addEventListener(event, () => {
-            for (numberRadio of numbersRadio) {
-                if (numberRadio.checked) {
-                    localStorage.setItem('RadioBtnNumber', numberRadio.value);
-                    setDataRadioBtn(numberRadio);
-                    break;
-                };
-            };
-
-            for (operatorRadio of operatorsRadio) {
-                if (operatorRadio.checked) {
-                    localStorage.setItem('RadioBtnOperator', operatorRadio.value);
-                    setDataRadioBtn(operatorRadio)
-                    break;
-                };
-            };
-
+            checkingValueRadioBtn();
             doc.querySelector('.panel-settings').classList.remove('settings-active');
             setTimeout(() => {
                 location.reload();
@@ -182,7 +189,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 }, 1000)
 
                 getBestScore();
-                audioPlay(audioSea, audioOn);
+
+                if (localStorage.getItem('sound-status') == 'on') {
+                    audioPlay(audioSea, audioOn);
+                } else {
+                    audioOn = false;
+                }
             };
             startGame = true;
         });
@@ -599,5 +611,5 @@ document.addEventListener("DOMContentLoaded", function () {
         doc.querySelector('.result-drops-wrong').textContent = dropsWrong;
     }
 
-    getRadioValue();
+    getlocalStorageValue();
 });
