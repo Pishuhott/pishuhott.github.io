@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let operatorsRadio = doc.getElementsByName('operator-radio');
     let numbersRadio = doc.getElementsByName('numbers-radio');
     let allRadioBtn = doc.querySelectorAll('.radio-btn');
+    let soundStatus = 'on';
     let audioSea = new Audio();
     let audioPop = new Audio();
     let audioPopBonus = new Audio();
@@ -60,7 +61,11 @@ document.addEventListener("DOMContentLoaded", function () {
     //---Receiving and transmitting radio buttons 
     //---from the local data storage
     let getlocalStorageValue = function () {
-        btnStopAudio.classList.add(`sound-${localStorage.getItem('sound-status')}`);
+        if(localStorage.getItem('sound-status') !== null) {
+            btnStopAudio.classList.add(`sound-${localStorage.getItem('sound-status')}`);
+            soundStatus = localStorage.getItem('sound-status');
+        }
+        
         checkingValueRadioBtn();
         numberLevel = localStorage.getItem('RadioBtnNumber');
         arrOperators = localStorage.getItem('RadioBtnOperator').split(' ');
@@ -190,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 getBestScore();
 
-                if (localStorage.getItem('sound-status') == 'on') {
+                if (soundStatus == 'on') {
                     audioPlay(audioSea, audioOn);
                 } else {
                     audioOn = false;
