@@ -79,16 +79,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 localStorage.setItem('RadioBtnNumber', numberRadio.value);
                 setDataRadioBtn(numberRadio);
                 break;
-            };
-        };
+            }
+        }
 
         for (operatorRadio of operatorsRadio) {
             if (operatorRadio.checked) {
                 localStorage.setItem('RadioBtnOperator', operatorRadio.value);
                 setDataRadioBtn(operatorRadio)
                 break;
-            };
-        };
+            }
+        }
     }
 
     let setDataRadioBtn = function (elem) {
@@ -102,8 +102,8 @@ document.addEventListener("DOMContentLoaded", function () {
     for (radioBtn of allRadioBtn) {
         if (radioBtn.getAttribute('id') == getDataRdioBtn(radioBtn.getAttribute('name'))) {
             radioBtn.checked = true;
-        };
-    };
+        }
+    }
 
     //---Event Click-------------------------------
     for (event of eventList) {
@@ -112,12 +112,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 numberPress(e.target.textContent)
                 return false;
             });
-        };
+        }
 
         for (let clearBtn of btnClear) {
             clearBtn.addEventListener(event,
                 (e) => clear(e.srcElement.id));
-        };
+        }
 
         btnEnter.addEventListener(event, () => {
             comparisonOfDropAndInputValues();
@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 audioOn = true;
                 audioPlay(audioSea, audioOn);
                 localStorage.setItem('sound-status', 'on')
-            };
+            }
 
         })
 
@@ -153,8 +153,8 @@ document.addEventListener("DOMContentLoaded", function () {
             for (radioBtn of allRadioBtn) {
                 if (radioBtn.getAttribute('id') == getDataRdioBtn(radioBtn.getAttribute('name'))) {
                     radioBtn.checked = true;
-                };
-            };
+                }
+            }
             doc.querySelector('.panel-settings').classList.remove('settings-active');
         })
 
@@ -166,9 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 1100)
         })
 
-        btnFullScren.addEventListener(event, (e) => {
-            if (!e.target.hasAttribute('full-scren'));
-
+        btnFullScren.addEventListener(event, () => {
             if (document.fullscreenElement) {
                 document.exitFullscreen();
             } else {
@@ -204,9 +202,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     audioOn = false;
                 }
-            };
+            }
             startGame = true;
-        });
+        })
 
         btnHowToPlay.addEventListener(event, () => {
             document.location.href = './../scr/tutorial.html';
@@ -237,8 +235,8 @@ document.addEventListener("DOMContentLoaded", function () {
             if (audioId == audioSea) {
                 audioSea.currentTime = 0;
                 audioSea.play();
-            };
-        };
+            }
+        }
     }
 
     //---Calc--------------------------------------
@@ -247,8 +245,8 @@ document.addEventListener("DOMContentLoaded", function () {
             display.value = number;
         } else {
             display.value += number;
-        };
-    };
+        }
+    }
 
     //---Entering data into the display------------
     let KeyDownValue = (code) => {
@@ -258,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
             display.value = '';
         } else if (key.id === 'delete') {
             display.value = display.value.slice(0, -1);
-        };
+        }
 
         if (key.id === 'clear' || key.id === 'delete' || key.id === 'enter') {
             display.value = display.value;
@@ -267,12 +265,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 display.value = key.textContent;
             } else {
                 display.value += key.textContent;
-            };
-        };
+            }
+        }
 
         if (key.id === 'enter') {
             comparisonOfDropAndInputValues();
-        };
+        }
     }
 
     //---Clearing Display--------------------------
@@ -281,7 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
             display.value = '';
         } else if (id === 'delete') {
             display.value = display.value.slice(0, -1);
-        };
+        }
     }
 
     window.addEventListener('keydown',
@@ -340,12 +338,12 @@ document.addEventListener("DOMContentLoaded", function () {
             tempNumber = drop.num1;
             drop.num1 = drop.num2;
             drop.num2 = tempNumber;
-        };
+        }
 
         if (drop.operator == '/') {
             drop.result = drop.num1;
             drop.num1 = drop.num2 * drop.result;
-        };
+        }
 
         drop.result = resultDrop(drop.num1, drop.operator, drop.num2);
 
@@ -360,7 +358,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (drop.bonus === true) {
             drop.duration = 5000;
             doc.querySelector('.drop').classList.add('drop-bonus');
-        };
+        }
         arrDrops.push(drop);
         dropAappearance((drop.id));
         MoveDrop(drop.id);
@@ -378,13 +376,13 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             bestScore.textContent = localStorage.getItem('ScoreStorege');
             doc.querySelector('.results-best-score').textContent = localStorage.getItem('ScoreStorege');
-        };
+        }
     }
 
     let setBestScore = function () {
         if (score.textContent > Number(localStorage.getItem('ScoreStorege'))) {
             localStorage.setItem('ScoreStorege', score.textContent);
-        };
+        }
         doc.querySelector('.results-score').textContent = score.textContent;
     }
 
@@ -410,13 +408,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         break;
                     } else {
                         doc.querySelector('.live-' + liveCounter).classList.add('live-delete');
-                    };
+                    }
                 } else {
                     audioPlay(audioFallInSea, audioOn);
                     RemoveDrop(dropIndex, dropId);
-                };
-            };
-        };
+                }
+            }
+        }
 
         if (fallCounter === 3) {
             setBestScore();
@@ -427,7 +425,7 @@ document.addEventListener("DOMContentLoaded", function () {
             clearInterval(timeControler);
             resultsWindow.classList.add('window-active');
             audioPlay(audioGameOver, audioOn);
-        };
+        }
     }
 
     let RemoveDrop = function (dropIndex, dropId) {
@@ -478,7 +476,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         arrDrops.splice(dropIndex, 1);
 
                     } else {
-                        scorePlus.textContent = '+' + (totalDrops * 10 + 50);;
+                        scorePlus.textContent = '+' + (totalDrops * 10 + 50)
                         score.textContent = Number(score.textContent) +
                             Number(scorePlus.textContent);
                         scorePlus.classList.add('score-active')
@@ -491,22 +489,22 @@ document.addEventListener("DOMContentLoaded", function () {
                             arrDrops = [];
                         }, 1000)
                         audioPlay(audioPopBonus, audioOn);
-                    };
+                    }
 
                     display.value = '';
                     audioPlay(audioSplash, audioOn)
                     points++;
                     dropsCorrect++;
                     break;
-                };
-            };
+                }
+            }
 
             if (correct === false) {
                 display.value = '';
                 incorrectUnswer();
                 audioPlay(audioError, audioOn);
                 dropsWrong++;
-            };
+            }
 
             //---Reducing the dropout time and 
             //---complicating the equations for increasing the score
@@ -522,7 +520,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     numberLevel2 = 29;
                 } else {
                     numberLevel2 = 60;
-                };
+                }
                 numberLevel1 = 9;
 
             } else if (Number(score.textContent) >= 200) {
@@ -538,7 +536,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     numberLevel2 = 25;
                 } else {
                     numberLevel2 = 50;
-                };
+                }
                 numberLevel1 = 5;
 
             } else if (Number(score.textContent) >= 100) {
@@ -554,7 +552,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     numberLevel2 = 23;
                 } else {
                     numberLevel2 = 45;
-                };
+                }
                 numberLevel1 = 3;
 
             } else if (Number(score.textContent) < 50) {
@@ -569,10 +567,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     numberLevel2 = 20;
                 } else {
                     numberLevel2 = 40;
-                };
+                }
                 numberLevel1 = 1;
-            };
-        };
+            }
+        }
     }
 
     //---Animation function for drop when destroyed
@@ -598,7 +596,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (sec >= 60) {
             min++;
             sec = 0;
-        };
+        }
     }
 
     //---Function adding results to a table--------
@@ -607,7 +605,7 @@ document.addEventListener("DOMContentLoaded", function () {
             doc.querySelector('.stopwatch-min').textContent = '0' + min;
         } else {
             doc.querySelector('.stopwatch-min').textContent = min;
-        };
+        }
 
         if (sec < 10) {
             doc.querySelector('.stopwatch-sec').textContent = ':0' + sec;
