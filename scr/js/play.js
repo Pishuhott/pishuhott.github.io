@@ -47,16 +47,17 @@ document.addEventListener("DOMContentLoaded", function () {
     let stopwatch; //Stopwatch setInterval
     let min = 0; //Stopwatch minutes
     let sec = 0; //Stopwatch seconds
-    let eventList = ['click', 'touchend'];
+    let eventList = ['click', 'touchend']
     let startGame = false; //Game start indicator
 
-    audioSea.src = './../sounds/sea.mp3'
-    audioPop.src = './../sounds/pop-drop.mp3';
-    audioPopBonus.src = './../sounds/correct-bonus-answer.mp3'
-    audioSplash.src = './../sounds/splash-drop.mp3';
-    audioError.src = './../sounds/error.mp3';
-    audioFallInSea.src = './../sounds/fall-in-sea.mp3';
-    audioGameOver.src = './../sounds/game-over.mp3';
+    audioSea.src = './assets/audio/sea.mp3';
+    audioSea.loop = true;
+    audioPop.src = './assets/audio/pop-drop.mp3';
+    audioPopBonus.src = './assets/audio/correct-bonus-answer.mp3'
+    audioSplash.src = './assets/audio/splash-drop.mp3';
+    audioError.src = './assets/audio/error.mp3';
+    audioFallInSea.src = './assets/audio/fall-in-sea.mp3';
+    audioGameOver.src = './assets/audio/game-over.mp3';
 
     //---Receiving and transmitting radio buttons 
     //---from the local data storage
@@ -65,9 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
             btnStopAudio.classList.add(`sound-${localStorage.getItem('sound-status')}`);
             soundStatus = localStorage.getItem('sound-status');
         }
-        if (localStorage.getItem('reGame') === 'true' && soundStatus === 'on') {
-            audioPlay(audioSea, audioOn);
-        }
+
         checkingValueRadioBtn();
         numberLevel = localStorage.getItem('RadioBtnNumber');
         arrOperators = localStorage.getItem('RadioBtnOperator').split(' ');
@@ -161,7 +160,6 @@ document.addEventListener("DOMContentLoaded", function () {
         btnContinue.addEventListener(event, () => {
             resultsWindow.classList.remove('window-active');
             setTimeout(() => {
-                localStorage.setItem('reGame', 'true')
                 location.reload();
             }, 1100)
         })

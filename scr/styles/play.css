@@ -117,7 +117,7 @@ button:focus {
 }
 
 .game-field {
-    background: url(../../img/beach.jpg) no-repeat center;
+    background: url('./../assets/img/beach.jpg') no-repeat center;
     background-size: cover;
     position: relative;
 }
@@ -151,7 +151,7 @@ button:focus {
 .drop, .drop-bonus {
     position: absolute;
     display: inline-block;
-    background: url(../../img/drop.svg) no-repeat center;
+    background: url('./../assets/img/drop.svg') no-repeat center;
     background-size: 65%;
     width: 120px;
     height: 170px;
@@ -161,19 +161,19 @@ button:focus {
 }
 
 .drop-bonus {
-    background: url(../../img/bonus-drop.svg) no-repeat center;
+    background: url('./../assets/img/bonus-drop.svg') no-repeat center;
     background-size: 65%;
     transition: top 5s linear;
 }
 
 .drop-splash, .drop-splash-bonus {
-    background: url(../../img/drop-splash.svg) no-repeat center;
+    background: url('./../assets/img/drop-splash.svg') no-repeat center;
     background-size: contain;
     animation: splash 1s linear;
 }
 
 .drop-splash-bonus {
-    background: url(../../img/bonus-drop-splash.svg) no-repeat center;
+    background: url('./../assets/img/bonus-drop-splash.svg') no-repeat center;
     background-size: contain;
 }
 
@@ -239,7 +239,7 @@ button:focus {
     z-index: 2;
     animation: water 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
     transform: translate3d(0, 0, 0);
-    background-image: url('../../img/wave.svg');
+    background-image: url('./../assets/img/wave.svg');
     background-repeat: repeat-x;
 }
 
@@ -339,7 +339,7 @@ button:focus {
 }
 
 .panel__lives div {
-    background-image: url(../../img/drop.png);
+    background-image: url('./../assets/img/drop.png');
     background-size: 100%;
     background-repeat: no-repeat;
     transition: all 1s ease;
