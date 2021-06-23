@@ -65,7 +65,9 @@ document.addEventListener("DOMContentLoaded", function () {
             btnStopAudio.classList.add(`sound-${localStorage.getItem('sound-status')}`);
             soundStatus = localStorage.getItem('sound-status');
         }
-        
+        if (localStorage.getItem('reGame') === 'true' && soundStatus === 'on') {
+            audioPlay(audioSea, audioOn);
+        }
         checkingValueRadioBtn();
         numberLevel = localStorage.getItem('RadioBtnNumber');
         arrOperators = localStorage.getItem('RadioBtnOperator').split(' ');
@@ -88,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
             };
         };
     }
+
     let setDataRadioBtn = function (elem) {
         localStorage.setItem(elem.getAttribute('name'), elem.getAttribute('id'));
     }
@@ -158,6 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
         btnContinue.addEventListener(event, () => {
             resultsWindow.classList.remove('window-active');
             setTimeout(() => {
+                localStorage.setItem('reGame', 'true')
                 location.reload();
             }, 1100)
         })
@@ -195,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 getBestScore();
 
-                if (soundStatus == 'on') {
+                if (soundStatus === 'on') {
                     audioPlay(audioSea, audioOn);
                 } else {
                     audioOn = false;
@@ -210,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     let audioPlay = function (audioId, audioOn) {
-        if (audioOn === true) {
+        if (audioOn) {
             if (audioId == audioPop) {
                 audioPop.currentTime = 0;
                 audioPop.play();
