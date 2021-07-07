@@ -1,0 +1,621 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Heebo', sans-serif;
+    font-size: 10px;
+}
+
+h2 {
+    font-size: 8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-color: #005e9d;
+    text-shadow: 0px 3px 3px rgb(255 255 255 / 50%);
+    user-select: none;
+}
+
+h3 {
+    position: relative;
+    top: 5%;
+    left: 5%;
+    font-size: 5rem;
+    user-select: none;
+}
+
+button {
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+
+button:focus {
+    display: none;
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(#c5ddf1, #94b6d1);
+    overflow: hidden;
+}
+
+.game__contener {
+    position: relative;
+    top: 10%;
+    left: 5%;
+    width: 60%;
+    height: 70%;
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    border: 5px solid #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    user-select: none;
+}
+
+.instructions-container {
+    display: block;
+    position: relative;
+    top: -60%;
+    left: 70%;
+    width: 27%;
+    height: 70%;
+    background-color: rgba(255, 255, 255, 0.597);
+    border: 5px solid #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    user-select: none;
+}
+
+.sliders {
+    height: 80%;
+    position: relative;
+    top: 0;
+    left: 0;
+    transition: all 1s ease;
+}
+
+.sliders__text {
+    width: 100%;
+    height: 100%;
+    padding: 1.7rem;
+    position: absolute;
+    top: 0;
+}
+
+.sliders__text p {
+    font-size: 2rem;
+}
+
+.bold-word {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.sliders__text:nth-child(1) {
+    right: 0;
+}
+
+.sliders__text:nth-child(2) {
+    right: -100%;
+}
+
+.sliders__text:nth-child(3) {
+    right: -200%;
+}
+
+.instructions__buttons {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    top: 92%;
+    width: 100%;
+}
+
+.instructions--button {
+    margin: 0 .7rem;
+    padding: 5px 10px;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: 3px solid #009644;
+    border-radius: .7rem;
+    background: #4fc383;
+    outline: none;
+    user-select: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.inactive {
+    border: 3px solid rgb(91, 91, 91);
+    border-radius: .7rem;
+    background: #7c9085;
+    cursor: default;
+}
+
+.results-window {
+    position: absolute;
+    top: -110%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 1s ease;
+    background: radial-gradient(#c5ddf1, #94b6d1);
+    z-index: 5;
+}
+
+.window-active {
+    top: 0;
+}
+
+.game-field {
+    background: url(../../img/beach.jpg) no-repeat center;
+    background-size: cover;
+    position: relative;
+}
+
+.game-drop-container {
+    width: 100%;
+    height: 100%;
+}
+
+.points__contener {
+    position: absolute;
+    top: 40%;
+    left: 30%;
+}
+
+#score-10, #score-20 {
+    font-size: 5rem;
+    font-weight: bold;
+    color: crimson;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 15;
+}
+
+#score-10 {
+    color: rgb(20, 220, 30);
+}
+
+.drop, .drop-bonus {
+    position: absolute;
+    display: inline-block;
+    background: url(../../img/drop.svg) no-repeat center;
+    background-size: 87%;
+    width: 85px;
+    height: 115px;
+    text-align: center;
+    top: 0;
+    transition: top 11s linear;
+}
+
+.drop-bonus {
+    background: url(../../img/bonus-drop.svg) no-repeat center;
+    background-size: 90%;
+    transition: top 5s linear;
+}
+
+.drop-splash {
+    background: url(../../img/drop-splash.svg) no-repeat center;
+    background-size: contain;
+    animation: splash 1s linear;
+}
+
+.drop-splash-bonus {
+    background: url(../../img/bonus-drop-splash.svg) no-repeat center;
+    background-size: contain;
+    animation: splash 1s linear;
+}
+
+@keyframes splash {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.drop-splash span, .drop-splash-bonus span {
+    display: none;
+}
+
+.drop span, .drop-bonus span {
+    font-size: 3rem;
+    position: absolute;
+}
+
+.drop .number-1 {
+    top: 30%;
+    left: 40%;
+}
+
+.drop-bonus .number-1 {
+    top: 30%;
+    left: 40%;
+}
+
+.drop__operator {
+    top: 45%;
+    left: 25%;
+}
+
+.drop .number-2 {
+    top: 60%;
+    left: 40%;
+}
+
+.drop-bonus .number-2 {
+    top: 60%;
+    left: 40%;
+}
+
+.wave {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 15%;
+    overflow: hidden;
+}
+
+.water {
+    position: absolute;
+    bottom: 0;
+    width: 5000px;
+    height: 100%;
+    z-index: 2;
+    animation: water 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+    transform: translate3d(0, 0, 0);
+    background-image: url('../../img/wave.svg');
+    background-repeat: repeat-x;
+}
+
+.water-2 {
+    bottom: 5px;
+    animation: water 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) -0.125s infinite, swell 7s ease -1.25s infinite;
+}
+
+@keyframes water {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: -1288px;
+    }
+}
+
+@keyframes swell {
+    0%, 100% {
+        transform: translate3d(0, -25px, 0);
+    }
+    50% {
+        transform: translate3d(0, 5px, 0);
+    }
+}
+
+.panel-game {
+    background-color: rgb(203, 232, 229);
+    text-align: center;
+}
+
+.panel-game {
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+}
+
+.panel__score {
+    width: 90%;
+    height: 30%;
+    padding: 10px 0;
+    background-color: rgb(238, 238, 238);
+    border: 1px solid white;
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    align-items: center;
+    justify-self: center;
+}
+
+.panel__score p {
+    font-size: 3rem;
+    position: relative;
+}
+
+.panel__score span {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: crimson;
+}
+
+.score-active {
+    animation: score-active 1s linear;
+}
+
+@keyframes score-active {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.panel__calc {
+    width: 80%;
+    height: 70%;
+    margin: auto;
+    padding: 10px;
+    background-color: rgb(231, 223, 194);
+    text-align: center;
+    box-shadow: 3px 5px 5px rgba(0, 0, 0, .3), -3px 5px 5px rgba(0, 0, 0, .3);
+}
+
+.display {
+    width: 100%;
+    height: 29%;
+    text-align: center;
+    font-size: 5rem;
+    border: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 1px solid rgb(167, 167, 167);
+    background-color: rgb(238, 238, 238);
+}
+
+.panel__buttons {
+    width: 100%;
+    height: 72%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(4, 25%);
+}
+
+.panel__buttons button {
+    cursor: default;
+}
+
+.panel__buttons button:nth-child(4) {
+    grid-column: 4 / 4;
+    grid-row: 1 / 3;
+}
+
+.panel__buttons button:nth-child(11) {
+    grid-column: 4 / 4;
+    grid-row: 3 / 5;
+}
+
+.panel__buttons button:nth-child(12) {
+    grid-column: 1 / 3;
+}
+
+.panel__buttons button {
+    background-color: white;
+    border: 1px solid rgb(167, 167, 167);
+}
+
+.btn-number {
+    font-size: 3rem;
+}
+
+.btn-enter, .btn-clear {
+    font-size: 1.5rem;
+}
+
+.panel__buttons__tols {
+    margin: auto;
+    width: 80%;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.panel__buttons__tols button {
+    width: 100%;
+    height: 100%;
+}
+
+.panel__buttons__tols button:nth-child(1) {
+    grid-column: 1 / 3;
+}
+
+.panel__buttons__tols button:nth-child(2) {
+    grid-column: 3 / 4;
+}
+
+.play {
+    position: absolute;
+    top: 90%;
+    left: 80%;
+    padding: 5px 10px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem;
+    color: white;
+    background: #e54444;
+    border: 4px solid #b03131;
+    border-radius: 10px;
+}
+
+.gaps {
+    width: 100%;
+    height: 16%;
+}
+
+.play:active, .howToPlay:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 770px) {
+    h3 {
+        font-size: 3rem;
+        top: 1%;
+    }
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    .drop, .drop-bonus {
+        background-size: 87%;
+        width: 55px;
+        height: 78px;
+    }
+    .drop-bonus {
+        background-size: 90%;
+        transition: top 5s linear;
+    }
+    .drop span, .drop-bonus span {
+        font-size: 2rem;
+    }
+    .wave {
+        height: 20%;
+    }
+    .game__contener {
+        top: 2%;
+        left: 5%;
+        width: 90%;
+        height: 50%;
+        grid-template-columns: 1fr 160px;
+    }
+    .panel__score {
+        height: 40%;
+        padding: 0;
+    }
+    .panel__score p {
+        font-size: 2rem;
+    }
+    .panel__score span {
+        font-size: 2.2rem;
+    }
+    #score-10, #score-20 {
+        font-size: 2.5rem;
+        top: 160%;
+        left: 30%;
+    }
+    .panel-game {
+        display: grid;
+        grid-template-rows: 80px 1fr;
+    }
+    .panel__calc {
+        margin: auto;
+        width: 90%;
+        height: 60%;
+        align-items: center;
+        justify-self: center;
+    }
+    .btn-number {
+        font-size: 1.5rem;
+    }
+    .btn-enter, .btn-clear {
+        font-size: .8rem;
+    }
+    .display {
+        width: 100%;
+        height: 32%;
+        font-size: 5rem;
+    }
+    .instructions-container {
+        top: 4%;
+        left: 5%;
+        width: 90%;
+        height: 33%;
+    }
+    .sliders__text p {
+        font-size: 1.7rem;
+    }
+    .bold-word {
+        font-size: 1.7rem;
+    }
+    .sliders {
+        height: 73%;
+        position: relative;
+        top: 0;
+        left: 0;
+        transition: all 1s ease;
+    }
+    .instructions__buttons {
+        top: 81%;
+    }
+    .play {
+        top: 92%;
+        left: 45%;
+    }
+}
+
+@media (max-width: 420px) {
+    h2 {
+        font-size: 4.2rem;
+    }
+    h3 {
+        left: 2%;
+    }
+    .game__contener {
+        left: 2%;
+        width: 96%;
+        height: 60%;
+        grid-template-columns: none;
+        grid-template-rows: 45% 55%;
+    }
+    .panel-game {
+        display: grid;
+        grid-template-rows: 15% 85%;
+    }
+    .panel__score {
+        height: 100%;
+    }
+    #score-10, #score-20 {
+        font-size: 2.5rem;
+        top: 0;
+        left: 15%;
+    }
+    .panel__calc {
+        margin: 1% auto;
+        width: 40%;
+        height: 95%;
+    }
+    .display {
+        font-size: 3rem;
+    }
+    .btn-enter, .btn-clear {
+        font-size: .9em;
+    }
+    .instructions-container {
+        left: 2%;
+        width: 96%;
+        height: 45%;
+    }
+    .sliders__text p {
+        font-size: 1.3rem;
+    }
+    .bold-word {
+        font-size: 1.3rem;
+    }
+    .instructions__buttons {
+        top: 85%;
+    }
+    .play {
+        bottom: 2%;
+        left: 42%;
+        font-size: 2rem;
+    }
+}

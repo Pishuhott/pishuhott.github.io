@@ -1,0 +1,770 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Heebo', sans-serif;
+    font-size: 10px;
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 310px;
+    border: 2px solid black;
+    position: relative;
+    overflow: hidden;
+}
+
+h2 {
+    font-size: 10rem;
+    font-weight: 800;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-color: #005e9d;
+    text-shadow: 0px 3px 3px rgba(255, 255, 255, 0.5);
+    user-select: none;
+}
+
+h3 {
+    font-size: 2.5rem;
+    color: #5b96be;
+    user-select: none;
+}
+
+button {
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    transition: all .3s slice;
+}
+
+button:focus {
+    display: none;
+}
+
+.howToPlay:hover {
+    border: 4px solid #cf6706;
+    background: #f8b445;
+    color: white;
+}
+
+.howToPlay:active {
+    font-size: 2rem;
+}
+
+.results-window {
+    position: absolute;
+    top: -110%;
+    width: 100%;
+    height: 100%;
+    transition: all 1s ease;
+    background: radial-gradient(#c5ddf1, #94b6d1);
+    z-index: 5;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+}
+
+.window-active {
+    top: 0;
+}
+
+.results-window p {
+    margin: 10px 0;
+    font-size: 2.5rem;
+    color: #5b96be;
+}
+
+.results-window span {
+    font-size: 3rem;
+    color: tomato;
+    font-weight: bold;
+}
+
+.results-table {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+}
+
+.results-drops {
+    margin: auto;
+    width: 35%;
+    background: #8dc34f9b;
+    border-radius: 20px;
+}
+
+.player-account {
+    margin: auto;
+    width: 35%;
+    background: #4fc3839b;
+    border-radius: 20px;
+}
+
+.btn-continue {
+    padding: 5px 10px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    background: #4fc383;
+    border: 2px solid #009644;
+    border-radius: 10px;
+}
+
+.game-field {
+    background: url('./../assets/img/beach.jpg') no-repeat center;
+    background-size: cover;
+    position: relative;
+}
+
+.poins__contener {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+}
+
+#score-10, #score-20 {
+    font-size: 10rem;
+    font-weight: bold;
+    color: crimson;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 15;
+}
+
+#score-10 {
+    color: rgb(20, 220, 30);
+}
+
+.game-drop-container {
+    width: 100%;
+    height: 100%;
+}
+
+.drop, .drop-bonus {
+    position: absolute;
+    display: inline-block;
+    background: url('./../assets/img/drop.svg') no-repeat center;
+    background-size: 65%;
+    width: 120px;
+    height: 170px;
+    text-align: center;
+    top: 0;
+    transition: top 10s linear;
+}
+
+.drop-bonus {
+    background: url('./../assets/img/bonus-drop.svg') no-repeat center;
+    background-size: 65%;
+    transition: top 5s linear;
+}
+
+.drop-splash, .drop-splash-bonus {
+    background: url('./../assets/img/drop-splash.svg') no-repeat center;
+    background-size: contain;
+    animation: splash 1s linear;
+}
+
+.drop-splash-bonus {
+    background: url('./../assets/img/bonus-drop-splash.svg') no-repeat center;
+    background-size: contain;
+}
+
+@keyframes splash {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.drop-splash span, .drop-splash-bonus span {
+    display: none;
+}
+
+.drop span, .drop-bonus span {
+    font-size: 3rem;
+    position: absolute;
+}
+
+.drop .number-1 {
+    top: 35%;
+    left: 45%;
+}
+
+.drop-bonus .number-1 {
+    top: 35%;
+    left: 45%;
+}
+
+.drop__operator {
+    top: 45%;
+    left: 25%;
+}
+
+.drop .number-2 {
+    top: 55%;
+    left: 45%;
+}
+
+.drop-bonus .number-2 {
+    top: 55%;
+    left: 45%;
+}
+
+.wave {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 15%;
+    overflow: hidden;
+}
+
+.water {
+    position: absolute;
+    bottom: 0;
+    width: 5000px;
+    height: 100%;
+    z-index: 2;
+    animation: water 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+    transform: translate3d(0, 0, 0);
+    background-image: url('./../assets/img/wave.svg');
+    background-repeat: repeat-x;
+}
+
+.water-2 {
+    bottom: 5px;
+    animation: water 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) -0.125s infinite, swell 7s ease -1.25s infinite;
+}
+
+@keyframes water {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: -1288px;
+    }
+}
+
+@keyframes swell {
+    0%, 100% {
+        transform: translate3d(0, -25px, 0);
+    }
+    50% {
+        transform: translate3d(0, 5px, 0);
+    }
+}
+
+.panel-game, .panel-settings {
+    background-color: rgb(203, 232, 229);
+    text-align: center;
+}
+
+.panel-settings p {
+    margin: 10px auto;
+    width: 90%;
+    font-size: 1.8rem;
+}
+
+.panel-game {
+    display: grid;
+    grid-template-rows: 15% 20% 50% 15%;
+}
+
+.panel__score {
+    width: 90%;
+    padding: 10px 0;
+    background-color: rgb(238, 238, 238);
+    border: 1px solid white;
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    align-items: center;
+    justify-self: center;
+}
+
+.panel__score p {
+    font-size: 3rem;
+    position: relative;
+}
+
+.panel__score span {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: crimson;
+}
+
+.score-active {
+    animation: score-active 1s linear;
+}
+
+@keyframes score-active {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.panel__lives {
+    margin: auto;
+    margin-top: 20px;
+    width: 60%;
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+}
+
+.lives {
+    width: 50%;
+    height: 75%;
+    min-width: 26px;
+    min-height: 40px;
+    pointer-events: none;
+}
+
+.panel__lives div {
+    background-image: url('./../assets/img/drop.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    transition: all 1s ease;
+}
+
+.panel__lives p {
+    font-family: 'Fredoka One', cursive;
+    font-weight: bold;
+    font-size: 2.5rem;
+    color: crimson;
+}
+
+.live-delete {
+    opacity: 0;
+}
+
+.panel__calc {
+    width: 80%;
+    height: 80%;
+    margin: auto;
+    padding: 10px;
+    background-color: rgb(231, 223, 194);
+    text-align: center;
+    box-shadow: 3px 5px 5px rgba(0, 0, 0, .3), -3px 5px 5px rgba(0, 0, 0, .3);
+}
+
+.display {
+    width: 100%;
+    height: 28%;
+    text-align: center;
+    font-size: 5rem;
+    border: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 1px solid rgb(167, 167, 167);
+    background-color: rgb(238, 238, 238);
+}
+
+.panel__buttons {
+    width: 100%;
+    height: 72%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(4, 25%);
+}
+
+.panel__buttons button:nth-child(4) {
+    grid-column: 4 / 4;
+    grid-row: 1 / 3;
+}
+
+.panel__buttons button:nth-child(11) {
+    grid-column: 4 / 4;
+    grid-row: 3 / 5;
+}
+
+.panel__buttons button:nth-child(12) {
+    grid-column: 1 / 3;
+}
+
+.panel__buttons button {
+    background-color: white;
+    border: 1px solid rgb(167, 167, 167);
+}
+
+.btn-number {
+    font-size: 3.5rem;
+}
+
+.btn-enter, .btn-clear {
+    font-size: 1.8rem;
+}
+
+.panel__buttons button:active {
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.panel__buttons__tols {
+    margin: auto;
+    width: 80%;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.panel__buttons__tols button {
+    width: 100%;
+    height: 100%;
+}
+
+.panel__buttons__tols button:nth-child(1) {
+    grid-column: 1 / 3;
+}
+
+.panel__buttons__tols button:nth-child(2) {
+    grid-column: 3 / 4;
+}
+
+.howToPlay, .play {
+    border: 4px solid #5b96be;
+    border-radius: 10px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: #5b96be;
+    background: none;
+}
+
+.play:hover {
+    color: white;
+    background: #e54444;
+    border: 4px solid #b03131;
+}
+
+.play:active, .howToPlay:active {
+    transform: scale(0.95);
+}
+
+.sound-on, .settings, .full-scren {
+    font-size: 2.5rem;
+    border-radius: 10px;
+    background: none;
+}
+
+.sound-on {
+    color: white;
+    background: #e54444;
+    border: 4px solid #b03131;
+}
+
+.settings, .full-scren {
+    border: 4px solid #5b96be;
+    color: #5b96be;
+}
+
+.full-scren {
+    border: 4px solid #5b96be;
+    color: #5b96be;
+}
+
+.settings:hover, .full-scren:hover, .sound-on:hover {
+    color: white;
+    background: #b3d3e9;
+}
+
+.sound-on:active, .settings:active, .full-scren:active {
+    transform: scale(0.95);
+}
+
+.sound-off {
+    color: black;
+}
+
+.panel-settings {
+    position: absolute;
+    width: 310px;
+    height: 100%;
+    right: -310px;
+    z-index: 2;
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
+    align-items: center;
+    justify-items: center;
+    transition: all 1s linear;
+}
+
+.settings-active {
+    right: 0;
+}
+
+.settings-checkbox {
+    margin: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.checkboxs h3 {
+    margin-bottom: 20px;
+}
+
+.checkbox-numbers label {
+    margin-bottom: 34px;
+}
+
+input[type=radio] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+label {
+    margin: 5px 10px;
+    font-size: 2rem;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+}
+
+.checkbox-active span {
+    display: inline-block;
+    margin-top: 3px;
+    width: 10px;
+    height: 10px;
+    background: #5b96be;
+    border-radius: 50%;
+    vertical-align: text-top;
+    transition: all 0.2s ease-in;
+}
+
+.checkbox-numbers .checkbox-element {
+    margin-bottom: 35px;
+}
+
+.setting-buttons {
+    width: 50%;
+    height: 35%;
+}
+
+.setting-buttons button {
+    margin: 0 .7rem;
+    width: 40%;
+    height: 100%;
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem;
+    border-radius: 10px;
+    background: none;
+    border: 4px solid #5b96be;
+    color: #5b96be;
+    transition: all .3s ease;
+}
+
+.setting-ok:hover {
+    color: white;
+    background: #4fc383;
+    border: 4px solid #009644;
+}
+
+.setting-cencel:hover {
+    background: #ff0000;
+    border: 4px solid #c30000;
+    color: white;
+}
+
+.setting-ok:active, .setting-cancel:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        grid-template-columns: 1fr 200px;
+    }
+    .panel__score p {
+        font-size: 2rem;
+    }
+    .panel__score span {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: crimson;
+    }
+    .poins__contener {
+        left: 35%;
+    }
+    #score-10, #score-20 {
+        font-size: 8rem;
+    }
+    .panel-game {
+        grid-template-rows: 10% 20% 50% 20%;
+    }
+    .panel__calc {
+        height: 50%;
+    }
+    .display {
+        font-size: 3rem;
+    }
+    .btn-number {
+        font-size: 2.2rem;
+    }
+    .btn-enter, .btn-clear {
+        font-size: 1.2rem;
+    }
+    .panel__buttons__tols {
+        width: 90%;
+    }
+    .tols__howToPlay, .play {
+        font-size: 1.5rem;
+    }
+    .full-scren {
+        display: none;
+    }
+    .panel__buttons__tols button:nth-child(4) {
+        grid-column: 2 / 4;
+    }
+    .panel-settings {
+        width: 200px;
+        display: flex;
+        width: 200px;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: space-evenly;
+    }
+    .panel-settings h3 {
+        font-size: 2rem;
+    }
+    .panel-settings p {
+        margin: 10px auto;
+        font-size: 1.3rem;
+    }
+    .settings-checkbox {
+        grid-template-columns: none;
+        grid-template-rows: 1fr 1fr;
+        height: 70%;
+    }
+    input[type=radio] {
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+    }
+    label {
+        font-size: 1.5rem;
+    }
+    .setting-buttons {
+        width: 75%;
+        height: 5%;
+    }
+}
+
+@media (max-width: 420px) {
+    .wrapper {
+        grid-template-columns: none;
+        grid-template-rows: 40% 60%;
+    }
+    .results-window h2 {
+        font-size: 5rem;
+    }
+    .results-window p {
+        font-size: 2rem;
+    }
+    .results-window span {
+        font-size: 2.5rem;
+    }
+    .results-drops, .player-account {
+        width: 70%;
+    }
+    #score-10, #score-20 {
+        font-size: 5rem;
+    }
+    .wave {
+        height: 20%;
+    }
+    .drop, .drop-bonus {
+        width: 50px;
+        height: 71px;
+        background-size: 100%;
+    }
+    .drop span, .drop-bonus span {
+        font-size: 2rem;
+    }
+    .drop .number-1 {
+        top: 25%;
+        left: 40%;
+    }
+    .drop .number-2 {
+        left: 40%;
+    }
+    .drop__operator {
+        top: 40%;
+        left: 15%;
+    }
+    .panel-game {
+        grid-template-rows: 8% 8% 65% 25%;
+    }
+    .panel__score {
+        padding: 0;
+    }
+    .best-score-elements {
+        display: none;
+    }
+    .panel__lives {
+        margin: 5px auto;
+        width: auto;
+    }
+    .panel__lives p {
+        font-size: 2rem;
+    }
+    .lives {
+        min-width: 20px;
+        min-height: 30px;
+    }
+    .panel__calc {
+        margin: 10px auto;
+        width: 60%;
+        height: 95%;
+    }
+    .display {
+        font-size: 4rem;
+    }
+    .btn-enter, .btn-clear {
+        font-size: 1.2rem;
+    }
+    .panel__buttons__tols {
+        margin-top: 8px;
+        width: 75%;
+        height: 70%;
+        grid-template-rows: repeat(2, 45%);
+        grid-gap: 5px;
+    }
+    .panel__buttons__tols button {
+        margin: 0 auto;
+        width: 100%;
+        height: 100%;
+        font-size: 1.5rem;
+    }
+    .panel-settings {
+        width: 100%;
+        height: 100%;
+        right: -100%;
+    }
+    .settings-active {
+        right: 0;
+    }
+    .setting-buttons {
+        width: 50%;
+        height: 7%;
+    }
+}

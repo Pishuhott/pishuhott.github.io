@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./styles/play.css">
+    <script src="./js/play.js"></script>
+    <title>Raindrops</title>
+</head>
+
+<body>
+    <div id="wraperr" class="wrapper">
+
+        <div class="results-window">
+            <h2>GAME OVER</h2>
+            <div class="results-table">
+                <p class="game-time">Game time:
+                    <span class="stopwatch-min">00</span><span class="stopwatch-sec">:00</span>
+                </p>
+                <div class="results-drops">
+                    <p>Total equations: <span class="result-drops-total">0</span></p>
+                    <p>Correct answers: <span class="result-drops-correct">0</span></p>
+                    <p>Wrong answer: <span class="result-drops-wrong">0</span></p>
+                </div>
+
+                <div class="player-account">
+                    <p>Your account: <span class="results-score">0</span></p>
+                    <p>Best score: <span class="results-best-score">0</span></p>
+                </div>
+            </div>
+            <div class="regame">
+                <button class="btn-continue">Continue</button>
+            </div>
+        </div>
+
+        <div class="game-field">
+            <div class="poins__contener">
+                <span id="score-10">+10</span>
+                <span id="score-20">-20</span>
+            </div>
+            <div class="game-drop-container">
+            </div>
+            <div class="wave">
+                <div class="water"></div>
+                <div class="water water-2"></div>
+            </div>
+        </div>
+
+        <div class="panel-game">
+            <div class="panel__score">
+                <p>Score: <span class="score">0</span></p>
+                <p class="best-score-elements">Best score: <span class="best-score">0</span></p>
+            </div>
+
+            <div class="panel__lives">
+                <p>Lives</p>
+                <div class="live-2 lives"></div>
+                <div class="live-1 lives"></div>
+            </div>
+            <div class="panel__calc">
+
+                <input class="display" type="text" maxlength="5" value="" disabled>
+                <div class="panel__buttons">
+                    <button data-key="103" class="btn-number btn">7</button>
+                    <button data-key="104" class="btn-number btn">8</button>
+                    <button data-key="105" class="btn-number btn">9</button>
+                    <button data-key="46" class="btn-clear btn" id="clear">Clear</button>
+                    <button data-key="100" class="btn-number btn">4</button>
+                    <button data-key="101" class="btn-number btn">5</button>
+                    <button data-key="102" class="btn-number btn">6</button>
+                    <button data-key="97" class="btn-number btn">1</button>
+                    <button data-key="98" class="btn-number btn">2</button>
+                    <button data-key="99" class="btn-number btn">3</button>
+                    <button data-key="13" class="btn-enter btn" id="enter">Enter</button>
+                    <button data-key="96" class="btn-number btn">0</button>
+                    <button data-key="8" class="btn-clear btn" id="delete">Delete</button>
+                </div>
+            </div>
+
+            <div class="panel__buttons__tols">
+                <button class="howToPlay">How to play?</button>
+                <button class="play">Play</button>
+                <button class="sound-on">♫</button>
+                <button class="settings">⚙</button>
+                <button class="full-scren">⛶</button>
+            </div>
+        </div>
+
+        <div class="panel-settings">
+            <div>
+                <h3>Equation difficulty selection settings</h3>
+                <p>
+                    Choose the type of equations you want to solve,
+                    you can also choose the range of numbers in the equation.
+                </p>
+            </div>
+            <div class="settings-checkbox">
+                <div class="checkbox-operators checkboxs">
+                    <h3>Equation type</h3>
+                    <label>
+                        <input class="radio-btn" type="radio" name="operator-radio" id="pm" value="+ -" checked><br>
+                        Addition and subtraction
+                    </label>
+                    <label>
+                        <input class="radio-btn" type="radio" name="operator-radio" id="md" value="* /"><br>
+                        Multiplication and division
+                    </label>
+                    <label>
+                        <input class="radio-btn" type="radio" name="operator-radio" id="allOpr" value="+ - * /"
+                            checked><br>
+                        All operations
+                    </label>
+                </div>
+
+                <div class="checkbox-numbers checkboxs">
+                    <h3>Range of numbers</h3>
+                    <label>
+                        <input class="radio-btn" type="radio" value="10" name="numbers-radio" id="numbers10"
+                            checked><br>
+                        1-10
+                    </label>
+                    <label>
+                        <input class="radio-btn" type="radio" value="20" name="numbers-radio" id="numbers20"><br>
+                        1-20
+                    </label>
+                    <label>
+                        <input class="radio-btn" type="radio" value="40" name="numbers-radio" id="numbers30"><br>
+                        1-40
+                    </label>
+                </div>
+            </div>
+
+            <div class="setting-buttons">
+                <button class="setting-ok">✔</button>
+                <button class="setting-cencel">🗙</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
